@@ -16,7 +16,7 @@ Counties in Progress
 * Rutland
 * Bennington
 
-## Join the Efforty
+## Join the Effort
 This effort is a collection of volunteers which includes volunteers, interns, and students getting course credit. Please reach out in Discussions to see if you can join the effort
 
 ## Partnerships
@@ -30,8 +30,8 @@ The project is in collaboration with the following
 * [Fair Housing Project](https://www.cvoeo.org/get-help/fair-housing-and-discrimination)
 * [Vermont Affordable Housing Coalition (VAHC)](https://www.vtaffordablehousing.org/)
 * [UVM’s Open Source Program Office (VERSO)](https://verso.w3.uvm.edu/)
-
-With the support of the University of [Vermont Gund Institute](https://www.uvm.edu/gund for Environment) and [Middlebury College Geography Department](https://www.middlebury.edu/college/academics/geography).
+* [University of Vermont Gund Institute](https://www.uvm.edu/gund for Environment)
+* [Middlebury College Geography Department](https://www.middlebury.edu/college/academics/geography).
 
 ## Roles and Tasks
 
