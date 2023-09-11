@@ -30,7 +30,7 @@ The project is in collaboration with the following
 * [Vermont Affordable Housing Coalition (VAHC)](https://www.vtaffordablehousing.org/)
 * [UVM’s Open Source Program Office (VERSO)](https://verso.w3.uvm.edu/)
 * [University of Vermont Gund Institute](https://www.uvm.edu/gund)
-* [Middlebury College Geography Department](https://www.middlebury.edu/college/academics/geography).
+* [Middlebury College Geography Department](https://www.middlebury.edu/college/academics/geography)
 
 ## Roles and Tasks
 
