@@ -1,7 +1,6 @@
 # Vermont Zoning Atlas
 
-The [Vermont Zoning Atlas](https://www.zoningatlas.org/vermont) is a web-based geospatial interface that visualizes zoning code distributions across all of Vermont. This means that you can query the tool: “Where can I build a 1-bedroom house as a matter of right in Vermont?” Or “Show me where I am prohibited from adding a mother-in-law apartment above my garage,” and you’ll be able to see a map with the areas shaded that answer your question. This project uses the [National Zoning Atlas](https://www.zoningatlas.org/) methodology, which will further allow apples-to-apples comparisons of zoning environments nationwide.
-
+The [Vermont Zoning Atlas](https://www.zoningatlas.org/vermont) is a web-based geospatial interface that visualizes zoning code distributions across all of Vermont. Zoning rules can present barriers to effective city planning, impairing our ability to achieve important policy objectives like community desegregation, climate change resiliency, transportation access, homelessness relief, and affordable housing development. The Vermont Zoning Atlas seeks to democratize researchers', policymakers', advocates', and everyday citizens' understanding of zoning regulations and enable apples-to-apples cross-jurisdiction comparisons through a methodology developed by our partner, the [National Zoning Atlas](https://www.zoningatlas.org/).
 Without this tool, one would have to read thousands of pages of dense legal code to answer simple questions - this is why we believe our tool will democratize zoning policy and make it possible for advocates and researchers to identify barriers to things like affordable housing development, climate resiliency, and community desegregation more quickly.
 
 In the News: 
