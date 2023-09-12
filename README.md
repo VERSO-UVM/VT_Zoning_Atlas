@@ -29,7 +29,7 @@ The project is in collaboration with the following
 * [Fair Housing Project](https://www.cvoeo.org/get-help/fair-housing-and-discrimination)
 * [Vermont Affordable Housing Coalition (VAHC)](https://www.vtaffordablehousing.org/)
 * [UVM’s Open Source Program Office (VERSO)](https://verso.w3.uvm.edu/)
-* [University of Vermont Gund Institute](https://www.uvm.edu/gund for Environment)
+* [University of Vermont Gund Institute](https://www.uvm.edu/gund)
 * [Middlebury College Geography Department](https://www.middlebury.edu/college/academics/geography).
 
 ## Roles and Tasks
