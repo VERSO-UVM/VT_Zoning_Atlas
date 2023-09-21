@@ -29,6 +29,7 @@ def consolidate_data(folder, gis_or_zoning): # gis_or_zoning is a string variabl
 
 def load_gis(filename):
     gdf = gpd.read_file(filename)
+    gdf = get_areas(gdf)
     return gdf
 
 def load_zoning(filename): # can be used to load .csv of either jurisdiction or district data
@@ -51,7 +52,7 @@ def by_right(housingtype, gdf):
     return by_right
 
 # Load data for all districts in directory into a single GeoDataFrame
-# all_district_geodata = consolidate_data('districts', 'gis')
+all_district_geodata = consolidate_data('districts', 'gis')
 # all_district_zoning_data = consolidate_data('districts', 'zoning')
 
 # Load data for all jurisdictions in directory into a single DataFrame
@@ -87,24 +88,25 @@ print('Number of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zonin
 print('Percentage of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes']/len(all_jxtn_data))
 
 # Total # pages of zoning text analyzed
-print(all_jxtn_data['# of Pages in the Zoning Code'])
-# all_jxtn_data['# of Pages in the Zoning Code'].astype(int, copy = False)
-print('Total number of pages of zoning text analyzed: ', np.sum(all_jxtn_data['# of Pages in the Zoning Code']))
-
-# Average # pages in each zoning text
-print('Average number of pages per zoning text: ', np.average(all_jxtn_data['# of Pages in the Zoning Code']))
+# print(all_jxtn_data['# of Pages in the Zoning Code'])
+# # all_jxtn_data['# of Pages in the Zoning Code'].astype(int, copy = False)
+# print('Total number of pages of zoning text analyzed: ', np.sum(all_jxtn_data['# of Pages in the Zoning Code']))
+#
+# # Average # pages in each zoning text
+# print('Average number of pages per zoning text: ', np.average(all_jxtn_data['# of Pages in the Zoning Code']))
 
 # Calculate areas of all districts in jurisdiction
-# bolton_areas = get_areas(bolton)
-#
-# # Calculate total area of jurisdiction by summing areas of base districts only,
-# # then converting square meters to square miles
-#
-# totalarea = get_total_area(bolton_areas)
-# print('The total area in square miles of Bolton is: ' + str(totalarea))
-#
-# # Calculate area of districts where single-family housing is allowable by right
-# singlefamily = np.sum(by_right('1-Family Treatment', bolton_areas)['area'])
-# print('The area of districts where single-family housing is allowable by right is: ', str(singlefamily))
-#
-# print('Single-family by right represents ', str(round(100*singlefamily/totalarea, 2)), '% of the area in Bolton.')
+for jxtn in all_district_geodata['Jurisdiction'].unique():
+    print('Total area zoned, including overlays, in ', jxtn, ': ', sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']))
+
+# Calculate total area of jurisdiction by summing areas of base districts only,
+# then converting square meters to square miles
+bolton_areas = all_district_geodata.loc[all_district_geodata['Jurisdiction'] == 'Bolton']
+totalarea = get_total_area(bolton_areas)
+print('The total area in square miles of Bolton (excluding overlays) is: ' + str(totalarea))
+
+# Calculate area of districts where single-family housing is allowable by right
+singlefamily = np.sum(by_right('1-Family Treatment', bolton_areas)['area'])
+print('The area of districts where single-family housing is allowable by right is: ', str(singlefamily))
+
+print('Single-family by right represents ', str(round(100*singlefamily/totalarea, 2)), '% of the area in Bolton.')
