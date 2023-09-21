@@ -1,9 +1,12 @@
-import os
+## IMPORTS
 
+import os
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 import geopandas as gpd
+
+## FUNCTION DECLARATION
 
 def consolidate_data(folder, gis_or_zoning): # gis_or_zoning is a string variable with value of either 'gis' or 'zoning'
     counter = 0
@@ -47,9 +50,11 @@ def get_total_area(gdf):
     base_districts = gdf.loc[gdf['Overlay'] == 'No']
     return(sum(base_districts['area']))
 
-def by_right(housingtype, gdf):
-    by_right = pd.DataFrame(gdf.loc[gdf[housingtype] == "Allowed/Conditional"], columns = gdf.columns)
+def due_process(housingtype, gdf, process_label):
+    by_right = pd.DataFrame(gdf.loc[gdf[housingtype] == process_label], columns = gdf.columns)
     return by_right
+
+## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
 
 # Load data for all districts in directory into a single GeoDataFrame
 all_district_geodata = consolidate_data('districts', 'gis')
@@ -106,7 +111,7 @@ totalarea = get_total_area(bolton_areas)
 print('The total area in square miles of Bolton (excluding overlays) is: ' + str(totalarea))
 
 # Calculate area of districts where single-family housing is allowable by right
-singlefamily = np.sum(by_right('1-Family Treatment', bolton_areas)['area'])
+singlefamily = np.sum(due_process('1-Family Treatment', bolton_areas, 'Allowed/Conditional')['area'])
 print('The area of districts where single-family housing is allowable by right is: ', str(singlefamily))
 
 print('Single-family by right represents ', str(round(100*singlefamily/totalarea, 2)), '% of the area in Bolton.')
