@@ -45,7 +45,7 @@ def load_zoning(filename): # can be used to load .csv of either jurisdiction or 
 
 def get_areas(gdf):
     gdf_copy = gdf.copy()
-    gdf_copy = gdf_copy.to_crs('epsg:3857')
+    gdf_copy = gdf_copy.to_crs('epsg:3083')
     gdf_copy['area'] = gdf_copy.geometry.area
     gdf_copy['area'] = gdf_copy['area']*3.86102*10**(-7)
     return gdf_copy
@@ -74,7 +74,7 @@ crs = {'init': 'epsg:4326'}
 
 if (os.path.exists("consolidated/district_geodata.csv") == False):
     all_district_geodata = consolidate_data('districts_gis', 'gis')
-    all_district_geodata.to_file('consolidated/district_geodata.csv')
+    all_district_geodata.to_csv('consolidated/district_geodata.csv')   # FIX: Does not create a .csv that can be converted to a GeoDataFrame
     print('Consolidated district geodata created.')
 else:
     print('Consolidated district geodata exists.')
@@ -97,7 +97,7 @@ else:
 
 if (os.path.exists('consolidated/jxtn_footprints.csv')) == False:
     all_jxtn_footprints = consolidate_data('jxtn_footprints', 'gis')
-    all_jxtn_footprints.to_file('consolidated/jxtn_footprints.csv')
+    all_jxtn_footprints.to_csv('consolidated/jxtn_footprints.csv')    # FIX: Does not create a .csv that can be converted to a GeoDataFrame
     print('Consolidated jurisdiction footprint data created.')
 else:
     print('Consolidated jursidictional footprint data exists.')
@@ -125,13 +125,10 @@ for index, row in govt_types.iterrows():
         zoninglabel = ' With Zoning'
     elif govt_types.loc[index]['Does It Have Zoning?'] == 'No':
         zoninglabel = ' Without Zoning'
-    xlabels.append(govt_types.loc[index]['Type of Government'] + zoninglabel)
+    xlabels.append(govt_types.loc[index]['Type of Government'] + '\n' + zoninglabel)
     heights.append(govt_types.loc[index]['count'])
 
-yticks = np.arange(min(heights)-1, max(heights)+1, max(heights)-min(heights))
 plt.bar(xlabels, heights)
-plt.xticks(rotation = 45)
-plt.yticks(yticks)
 plt.title('Types of Jurisdictional Government in Dataset')
 plt.tight_layout()
 plt.show()
@@ -155,11 +152,24 @@ print('----------------------')
 # # Average # pages in each zoning text
 # print('Average number of pages per zoning text: ', np.average(all_jxtn_data['# of Pages in the Zoning Code']))
 
+# Shortest and longest texts
+# minpages = np.min(all_jxtn_data['# of Pages in the Zoning Code'])
+# print('Shortest zoning text: ', all_jxtn_data.loc[all_jxtn_data['# of Pages in the Zoning Code] == minpages]['Jurisdiction'], str(minpages))
+# maxpages = np.max(all_jxtn_data['# of Pages in the Zoning Code'])
+# print('Shortest zoning text: ', all_jxtn_data.loc[all_jxtn_data['# of Pages in the Zoning Code] == maxpages]['Jurisdiction'], str(maxpages))
+
+# Oldest district analyzed
+
+# Average # of districts per locality
+print('\nNumber of districts per locality: ', round(len(all_district_zoning_data)/len(all_district_zoning_data['Jurisdiction'].unique()), 3))
+
+# Total # and % of districts mapped and unmapped
+
 # Calculate areas of all districts in jurisdiction
-print('\nAreas zoned, by jurisdiction:')
-print('---------------------------------')
+print('\nTotal area zoned, including overlays, by jurisdiction:')
+print('----------------------------------------------------------')
 for jxtn in all_district_geodata['Jurisdiction'].unique():
-    print('Total area zoned, including overlays, in ', jxtn, ': ', sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']))
+    print(jxtn.ljust(25), '\t', round(sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']), 3))
 #
 # # Calculate total area of jurisdiction by summing areas of base districts only,
 # # then converting square meters to square miles
