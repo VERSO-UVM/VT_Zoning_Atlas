@@ -3,8 +3,11 @@
 import os
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 from matplotlib import pyplot as plt
 import geopandas as gpd
+import warnings # To suppress warning displays in console output
+
 
 ## FUNCTION DECLARATION
 
@@ -52,7 +55,7 @@ def get_areas(gdf):
 
 def get_total_area(gdf):
     base_districts = gdf.loc[gdf['Overlay'] == 'No']
-    return(sum(base_districts['area']))
+    return(round(sum(base_districts['area']), 1))
 
 def slice_gdf(var, gdf, slice_label):
     slice_gdf = gdf.loc[gdf[var] == slice_label]
@@ -61,7 +64,14 @@ def slice_gdf(var, gdf, slice_label):
 def map_area(gdf):
     pass
 
+def fxn():
+    warnings.warn("deprecated", DeprecationWarning)
+
 ## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    fxn()
 
 print('\nCREATING FILES\n')
 
@@ -72,13 +82,14 @@ crs = {'init': 'epsg:4326'}
 # For each: if yes, then read file to object in current workspace
 # If no, load data for all districts in directory into a single GeoDataFrame
 
-if (os.path.exists("consolidated/district_geodata.csv") == False):
+if (os.path.exists("consolidated/district_geodata.geojson") == False):
     all_district_geodata = consolidate_data('districts_gis', 'gis')
-    all_district_geodata.to_csv('consolidated/district_geodata.csv')   # FIX: Does not create a .csv that can be converted to a GeoDataFrame
+    all_district_geodata.to_json()
+    all_district_geodata.to_file('consolidated/district_geodata.geojson')
     print('Consolidated district geodata created.')
 else:
     print('Consolidated district geodata exists.')
-    all_district_geodata = gpd.read_file("consolidated/district_geodata.csv")
+    all_district_geodata = gpd.read_file("consolidated/district_geodata.geojson")
 
 if(os.path.exists('consolidated/district_zoning_data.csv') == False):
     all_district_zoning_data = pd.DataFrame(all_district_geodata, copy = True).drop(columns = ['geometry','area'])
@@ -95,13 +106,14 @@ else:
     print('Consolidated jurisdiction attribute data exists.')
     all_jxtn_data = pd.read_csv('consolidated/jxtn_data.csv')
 
-if (os.path.exists('consolidated/jxtn_footprints.csv')) == False:
+if (os.path.exists('consolidated/jxtn_footprints.geojson')) == False:
     all_jxtn_footprints = consolidate_data('jxtn_footprints', 'gis')
-    all_jxtn_footprints.to_csv('consolidated/jxtn_footprints.csv')    # FIX: Does not create a .csv that can be converted to a GeoDataFrame
+    all_jxtn_footprints.to_json()
+    all_jxtn_footprints.to_file('consolidated/jxtn_footprints.geojson')
     print('Consolidated jurisdiction footprint data created.')
 else:
     print('Consolidated jursidictional footprint data exists.')
-    all_jxtn_footprints = gpd.read_file('consolidated/jxtn_footprints.csv')
+    all_jxtn_footprints = gpd.read_file('consolidated/jxtn_footprints.geojson')
 
 # Load data for all jurisdictions in directory into a single DataFrame
 
@@ -116,7 +128,7 @@ print('Total number of jurisdictions analyzed: ', len(all_jxtn_data))
 print('Total number of districts analyzed: ', len(all_district_zoning_data))
 print('Total number of geospatial files completed: ', len(all_district_geodata))
 
-# Side-by-side barplot of jurisdiction types both with and without zoning
+#Side-by-side barplot of jurisdiction types both with and without zoning
 govt_types = all_jxtn_data.groupby(['Type of Government', 'Does It Have Zoning?']).size().reset_index(name='count')
 xlabels = []
 heights = []
@@ -139,50 +151,42 @@ print('----------------------')
 print('Number of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes'])
 print('Percentage of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes']/len(all_jxtn_data))
 
-# Map: % of land covered by zoning in the state/region
-# zoned_regions =
-# zoned_regions.plot()
+cmap = (mpl.colors.ListedColormap(['lightgray', 'green']))
+all_jxtn_footprints.plot(column = 'Does It Have Zoning?', categorical=True, cmap=cmap, legend=True)
+plt.title('Zoned and unzoned jurisdictions,\nAddison and Chittenden Counties, VT')
+plt.axis('off')
+plt.show()
 
 # Total # pages of zoning text analyzed
 print('\nZoning Text Length')
 print('----------------------')
-# all_jxtn_data['# of Pages in the Zoning Code'].astype(int, copy = False)
-# print('Total number of pages of zoning text analyzed: ', np.sum(all_jxtn_data['# of Pages in the Zoning Code']))
-#
-# # Average # pages in each zoning text
-# print('Average number of pages per zoning text: ', np.average(all_jxtn_data['# of Pages in the Zoning Code']))
+all_jxtn_footprints['# of Pages in the Zoning Code'].astype(int, copy = False)
+print('Total number of pages of zoning text analyzed: ', np.sum(all_jxtn_footprints['# of Pages in the Zoning Code']))
+
+# Average # pages in each zoning text
+print('Average number of pages per zoning text: ', round(np.average(all_jxtn_footprints['# of Pages in the Zoning Code']), 1))
 
 # Shortest and longest texts
-# minpages = np.min(all_jxtn_data['# of Pages in the Zoning Code'])
-# print('Shortest zoning text: ', all_jxtn_data.loc[all_jxtn_data['# of Pages in the Zoning Code] == minpages]['Jurisdiction'], str(minpages))
-# maxpages = np.max(all_jxtn_data['# of Pages in the Zoning Code'])
-# print('Shortest zoning text: ', all_jxtn_data.loc[all_jxtn_data['# of Pages in the Zoning Code] == maxpages]['Jurisdiction'], str(maxpages))
+minpages = np.min(all_jxtn_footprints.loc[all_jxtn_footprints['# of Pages in the Zoning Code']!=0]['# of Pages in the Zoning Code'])
+print('Shortest zoning text: ', str(minpages) + ' pages\nJurisdiction(s):', str(all_jxtn_data.loc[all_jxtn_footprints['# of Pages in the Zoning Code'] == minpages]['Jurisdiction']))
+maxpages = np.max(all_jxtn_footprints['# of Pages in the Zoning Code'])
+print('Longest zoning text: ', str(maxpages) + ' pages\nJurisdiction(s):', str(all_jxtn_footprints.loc[all_jxtn_footprints['# of Pages in the Zoning Code'] == maxpages]['Jurisdiction']))
 
 # Oldest district analyzed
 
 # Average # of districts per locality
-print('\nNumber of districts per locality: ', round(len(all_district_zoning_data)/len(all_district_zoning_data['Jurisdiction'].unique()), 3))
+print('\nNumber of districts per locality: ', round(len(all_district_zoning_data)/len(all_district_zoning_data['Jurisdiction'].unique()), 1))
 
 # Total # and % of districts mapped and unmapped
 
 # Calculate areas of all districts in jurisdiction
-print('\nTotal area zoned, including overlays, by jurisdiction:')
-print('----------------------------------------------------------')
+# Format as table
+divider = '----------------------------------------------------------------------'
+print('\n')
+print('Total area zoned by jurisdiction:'.center(len(divider)))
+print(divider)
+print('JURISDICTION'.ljust(15), '\tINCLUDING OVERLAYS\tEXCLUDING OVERLAYS')
 for jxtn in all_district_geodata['Jurisdiction'].unique():
-    print(jxtn.ljust(25), '\t', round(sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']), 3))
-#
-# # Calculate total area of jurisdiction by summing areas of base districts only,
-# # then converting square meters to square miles
-# bolton_areas = all_district_geodata.loc[all_district_geodata['Jurisdiction'] == 'Bolton']
-# totalarea = get_total_area(bolton_areas)
-# print('The total area in square miles of Bolton (excluding overlays) is: ' + str(totalarea))
-#
-# # Calculate area of districts where single-family housing is allowable by right
-# threefamily = slice_gdf('3-Family Treatment', bolton_areas, 'Public Hearing')
-# num_threefamily = np.sum(threefamily['area'])
-# print('The area of districts where 3-family housing is allowable by right requires a public hearing is: ', str(num_threefamily))
-#
-# threefamily.plot()
-# plt.show()
-#
-# print('3-family public hearing represents ', str(round(100*num_threefamily/totalarea, 2)), '% of the area in Bolton.')
+    thisjxtn = all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]
+    thisjxtn_wo_overlays = get_total_area(thisjxtn)
+    print(jxtn.ljust(25), '\t', str(round(sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']), 1)).ljust(20), thisjxtn_wo_overlays)
