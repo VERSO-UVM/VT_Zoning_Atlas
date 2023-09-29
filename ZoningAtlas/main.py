@@ -67,6 +67,55 @@ def map_area(gdf):
 def fxn():
     warnings.warn("deprecated", DeprecationWarning)
 
+def percent_coverage(gdf, attribute, value):
+    gdf_copy = gdf.copy()
+    gdf_att_true = gdf_copy.loc[(gdf_copy[attribute] == value) & (gdf_copy['Overlay'] == 'No')]
+    area_true = sum(gdf_att_true['area'])
+    all_area = get_total_area(gdf)
+    return round(100*area_true/all_area, 1)
+
+def viz_allvals(gdf,attr):
+    gdf_copy = gdf.copy()
+    fig, ax = plt.subplots()
+    gdf_copy.sort_values(attr, inplace = True)
+    cmap = (mpl.colors.ListedColormap(['purple', 'black', 'orange', 'lightgray', 'green']))
+    gdf_copy[attr].replace("", 'Unspecified', inplace=True)
+    gdf_copy = gdf_copy.loc[gdf_copy['Overlay'] == 'No']
+    gdf_copy.plot(column=attr, categorical=True, ax=ax, cmap=cmap, legend=True)
+    starty = 0.1
+    counter = 0
+    for value in gdf_copy[attr].unique():
+        if value != 'Overlay' and value != 'Unspecified':
+            plt.figtext(0.35, starty - 0.025 * counter, attr + value + ' in '
+                        + str(percent_coverage(gdf_copy, attr, value))
+                        + '% of land area.')
+            counter += 1
+    plt.title(attr + ' Distribution in \nAddison and Chittenden Counties, VT')
+    ax.set_axis_off()
+    plt.show()
+
+def viz_binary_val(gdf,attr,targetval):
+    gdf_copy = gdf.copy()
+    fig, ax = plt.subplots()
+    cmap = (mpl.colors.ListedColormap(['purple', 'lightgray']))
+    for val in gdf_copy[attr].unique():
+        if val != targetval:
+            gdf_copy[attr].replace(val, 'ZZZ', inplace=True)
+    gdf_copy = gdf_copy.loc[gdf_copy['Overlay'] == 'No']
+    gdf_copy.sort_values(attr)
+    gdf_copy.plot(column=attr, categorical=True, ax=ax, cmap=cmap)
+    starty = 0.1
+    counter = 0
+    plt.figtext(0.35, 0.1, attr + ' '+ targetval + ' in '
+                + str(percent_coverage(gdf_copy, attr, targetval))
+                + '% of land area.')
+    plt.figtext(0.35, starty - 0.025, attr + ' not ' + targetval + ' in '
+                + str(round(100 - percent_coverage(gdf_copy, attr, targetval), 1))
+                + '% of land area.')
+    plt.title('Base districts where ' + attr + ' is ' + targetval + '\nAddison and Chittenden Counties, VT')
+    ax.set_axis_off()
+    plt.show()
+
 ## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
 
 with warnings.catch_warnings():
@@ -117,7 +166,7 @@ else:
 
 # Load data for all jurisdictions in directory into a single DataFrame
 
-''' Jurisdiction characteristics '''
+# ''' Jurisdiction characteristics '''
 
 print('\nJURISDICTION CHARACTERISTICS')
 
@@ -151,6 +200,7 @@ print('----------------------')
 print('Number of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes'])
 print('Percentage of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes']/len(all_jxtn_data))
 
+# Map zoned versus unzoned districts
 cmap = (mpl.colors.ListedColormap(['lightgray', 'green']))
 all_jxtn_footprints.plot(column = 'Does It Have Zoning?', categorical=True, cmap=cmap, legend=True)
 plt.title('Zoned and unzoned jurisdictions,\nAddison and Chittenden Counties, VT')
@@ -190,3 +240,46 @@ for jxtn in all_district_geodata['Jurisdiction'].unique():
     thisjxtn = all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]
     thisjxtn_wo_overlays = get_total_area(thisjxtn)
     print(jxtn.ljust(25), '\t', str(round(sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']), 1)).ljust(20), thisjxtn_wo_overlays)
+
+''' Jurisdiction characteristics '''
+
+print('\nZONING CHARACTERISTICS')
+
+Map type of district
+viz_allvals(all_district_geodata, 'Type of Zoning District')
+viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Primarily Residential')
+viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Mixed with Residential')
+viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Nonresidential')
+
+# Barplot of % area zoned as "Allowed/Conditional" for 1, 2, 3, and 4+ family treatments
+xlabels = []
+heights = []
+for x in ['1', '2', '3', '4+']:
+    attr = x+'-Family Treatment'
+    heights.append(percent_coverage(all_district_geodata, attr, 'Allowed/Conditional'))
+    xlabels.append(attr)
+plt.bar(xlabels, heights)
+plt.title('% Base District Area Zoned By-Right,\n Chittenden and Addison Counties, VT')
+plt.tight_layout()
+plt.show()
+
+# Barplot of % area requiring public hearing for 1, 2, 3, and 4+ family treatments
+xlabels = []
+heights = []
+for x in ['1', '2', '3', '4+']:
+    attr = x+'-Family Treatment'
+    heights.append(percent_coverage(all_district_geodata, attr, 'Public Hearing'))
+    xlabels.append(attr)
+plt.bar(xlabels, heights)
+plt.title('% Base District Area Requiring Public Hearing,\n Chittenden and Addison Counties, VT')
+plt.tight_layout()
+plt.show()
+
+# Map due process requirements for residential treatments
+viz_allvals(all_district_geodata, '1-Family Treatment')
+viz_allvals(all_district_geodata, '2-Family Treatment')
+viz_allvals(all_district_geodata, '3-Family Treatment')
+viz_allvals(all_district_geodata, '4+-Family Treatment')
+viz_allvals(all_district_geodata, 'Accessory Dwelling Unit (ADU) Treatment')
+viz_allvals(all_district_geodata, 'Planned Residential Development (PRD) Treatment')
+plt.show()
