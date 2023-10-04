@@ -86,13 +86,14 @@ def viz_allvals(gdf,attr):
     counter = 0
     for value in gdf_copy[attr].unique():
         if value != 'Overlay' and value != 'Unspecified':
-            plt.figtext(0.35, starty - 0.025 * counter, attr + value + ' in '
+            plt.figtext(0.02, starty - 0.025 * counter, attr + value + ' in '
                         + str(percent_coverage(gdf_copy, attr, value))
                         + '% of land area.')
             counter += 1
     plt.title(attr + ' Distribution in \nAddison and Chittenden Counties, VT')
     ax.set_axis_off()
-    plt.show()
+    plt.tight_layout()
+    plt.savefig('imgs/full_distr_'+attr.lower().strip(' ')+'.jpg')
 
 def viz_binary_val(gdf,attr,targetval):
     gdf_copy = gdf.copy()
@@ -105,18 +106,21 @@ def viz_binary_val(gdf,attr,targetval):
     gdf_copy.sort_values(attr)
     gdf_copy.plot(column=attr, categorical=True, ax=ax, cmap=cmap)
     starty = 0.1
-    counter = 0
-    plt.figtext(0.35, 0.1, attr + ' '+ targetval + ' in '
+    plt.figtext(0.02, 0.1, attr + ' '+ targetval + ' in '
                 + str(percent_coverage(gdf_copy, attr, targetval))
                 + '% of land area.')
-    plt.figtext(0.35, starty - 0.025, attr + ' not ' + targetval + ' in '
+    plt.figtext(0.02, starty - 0.025, attr + ' not ' + targetval + ' in '
                 + str(round(100 - percent_coverage(gdf_copy, attr, targetval), 1))
                 + '% of land area.')
     plt.title('Base districts where ' + attr + ' is ' + targetval + '\nAddison and Chittenden Counties, VT')
     ax.set_axis_off()
-    plt.show()
+    plt.tight_layout()
+    plt.savefig('imgs/binary_val_'+attr.lower().strip(' ')+'.jpg')
+    plt.clf()
 
 ## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
+
+plt.rcParams["figure.figsize"] = [15, 15]
 
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
@@ -192,7 +196,8 @@ for index, row in govt_types.iterrows():
 plt.bar(xlabels, heights)
 plt.title('Types of Jurisdictional Government in Dataset')
 plt.tight_layout()
-plt.show()
+plt.savefig('imgs/barplot_zoning_or_no.jpg')
+plt.clf()
 
 # Number and percentage of jurisdictions with zoning
 print('\nPresence of zoning')
@@ -205,7 +210,8 @@ cmap = (mpl.colors.ListedColormap(['lightgray', 'green']))
 all_jxtn_footprints.plot(column = 'Does It Have Zoning?', categorical=True, cmap=cmap, legend=True)
 plt.title('Zoned and unzoned jurisdictions,\nAddison and Chittenden Counties, VT')
 plt.axis('off')
-plt.show()
+plt.savefig('imgs/map_zoned_or_no.jpg')
+plt.clf()
 
 # Total # pages of zoning text analyzed
 print('\nZoning Text Length')
@@ -245,7 +251,7 @@ for jxtn in all_district_geodata['Jurisdiction'].unique():
 
 print('\nZONING CHARACTERISTICS')
 
-Map type of district
+# Map type of district
 viz_allvals(all_district_geodata, 'Type of Zoning District')
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Primarily Residential')
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Mixed with Residential')
@@ -261,7 +267,8 @@ for x in ['1', '2', '3', '4+']:
 plt.bar(xlabels, heights)
 plt.title('% Base District Area Zoned By-Right,\n Chittenden and Addison Counties, VT')
 plt.tight_layout()
-plt.show()
+plt.savefig('imgs/barplot_by-right.jpg')
+plt.clf()
 
 # Barplot of % area requiring public hearing for 1, 2, 3, and 4+ family treatments
 xlabels = []
@@ -273,7 +280,7 @@ for x in ['1', '2', '3', '4+']:
 plt.bar(xlabels, heights)
 plt.title('% Base District Area Requiring Public Hearing,\n Chittenden and Addison Counties, VT')
 plt.tight_layout()
-plt.show()
+plt.savefig('imgs/barplot_public_hearing.jpg')
 
 # Map due process requirements for residential treatments
 viz_allvals(all_district_geodata, '1-Family Treatment')
@@ -282,4 +289,4 @@ viz_allvals(all_district_geodata, '3-Family Treatment')
 viz_allvals(all_district_geodata, '4+-Family Treatment')
 viz_allvals(all_district_geodata, 'Accessory Dwelling Unit (ADU) Treatment')
 viz_allvals(all_district_geodata, 'Planned Residential Development (PRD) Treatment')
-plt.show()
+
