@@ -61,15 +61,15 @@ def slice_gdf(var, gdf, slice_label):
     slice_gdf = gdf.loc[gdf[var] == slice_label]
     return slice_gdf
 
-def map_area(gdf):
-    pass
-
 def fxn():
     warnings.warn("deprecated", DeprecationWarning)
 
 def percent_coverage(gdf, attribute, value):
     gdf_copy = gdf.copy()
-    gdf_att_true = gdf_copy.loc[(gdf_copy[attribute] == value) & (gdf_copy['Overlay'] == 'No')]
+    if type(value) != list:
+        gdf_att_true = gdf_copy.loc[(gdf_copy[attribute] == value) & (gdf_copy['Overlay'] == 'No')]
+    else:
+        gdf_att_true = gdf_copy.loc[(gdf_copy[attribute].isin(value)) & (gdf_copy['Overlay']== 'No')]
     area_true = sum(gdf_att_true['area'])
     all_area = get_total_area(gdf)
     return round(100*area_true/all_area, 1)
@@ -117,6 +117,30 @@ def viz_binary_val(gdf,attr,targetval):
     plt.tight_layout()
     plt.savefig('imgs/binary_val_'+attr.lower().strip(' ')+'.jpg')
     plt.clf()
+
+def barplot_res_tx(gdf, targetvals, title):
+    xlabels = []
+    heights = []
+    for x in ['1', '2', '3', '4+']:
+        attr = x + '-Family Treatment'
+        heights.append(percent_coverage(gdf, attr, targetvals))
+        xlabels.append(attr)
+    plt.bar(xlabels, heights)
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig('imgs/barplot_' + targetvals + '.jpg')
+    plt.clf()
+
+def min_lot_size(gdf, att, minlotsize):
+    gdf_copy = gdf.copy()
+    min_size = pd.DataFrame(columns = gdf_copy.columns)
+    for index, row in gdf_copy.iterrows():
+        try:
+            if float(row[att]) > minlotsize:
+                min_size.loc[len(min_size)] = row
+        except:
+            pass
+    return round(100*sum(min_size['area'])/sum(gdf_copy['area']), 2)
 
 ## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
 
@@ -170,7 +194,7 @@ else:
 
 # Load data for all jurisdictions in directory into a single DataFrame
 
-# ''' Jurisdiction characteristics '''
+''' Jurisdiction characteristics '''
 
 print('\nJURISDICTION CHARACTERISTICS')
 
@@ -181,7 +205,7 @@ print('Total number of jurisdictions analyzed: ', len(all_jxtn_data))
 print('Total number of districts analyzed: ', len(all_district_zoning_data))
 print('Total number of geospatial files completed: ', len(all_district_geodata))
 
-#Side-by-side barplot of jurisdiction types both with and without zoning
+# Side-by-side barplot of jurisdiction types both with and without zoning
 govt_types = all_jxtn_data.groupby(['Type of Government', 'Does It Have Zoning?']).size().reset_index(name='count')
 xlabels = []
 heights = []
@@ -207,8 +231,11 @@ print('Percentage of jurisdictions with zoning: ', all_jxtn_data['Does It Have Z
 
 # Map zoned versus unzoned districts
 cmap = (mpl.colors.ListedColormap(['lightgray', 'green']))
-all_jxtn_footprints.plot(column = 'Does It Have Zoning?', categorical=True, cmap=cmap, legend=True)
-plt.title('Zoned and unzoned jurisdictions,\nAddison and Chittenden Counties, VT')
+all_jxtn_footprints.plot(column = 'Does It Have Zoning?', categorical=True, cmap=cmap, legend=True, legend_kwds={'labels': ['Unzoned', 'Zoned']})
+all_jxtn_area = sum(all_jxtn_footprints['area'])
+all_zoned_jxtns = sum(all_jxtn_footprints.loc[all_jxtn_footprints['Does It Have Zoning?'] == 'Yes']['area'])
+plt.title('Addison and Chittenden County Jurisdictions, VT')
+plt.figtext(0.02, 0.1, str(round(100*all_zoned_jxtns/all_jxtn_area, 1)) + '% of analyzed area is zoned.')
 plt.axis('off')
 plt.savefig('imgs/map_zoned_or_no.jpg')
 plt.clf()
@@ -247,7 +274,7 @@ for jxtn in all_district_geodata['Jurisdiction'].unique():
     thisjxtn_wo_overlays = get_total_area(thisjxtn)
     print(jxtn.ljust(25), '\t', str(round(sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']), 1)).ljust(20), thisjxtn_wo_overlays)
 
-''' Jurisdiction characteristics '''
+''' Zoning characteristics '''
 
 print('\nZONING CHARACTERISTICS')
 
@@ -257,30 +284,34 @@ viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Primarily Resid
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Mixed with Residential')
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Nonresidential')
 
-# Barplot of % area zoned as "Allowed/Conditional" for 1, 2, 3, and 4+ family treatments
-xlabels = []
-heights = []
-for x in ['1', '2', '3', '4+']:
-    attr = x+'-Family Treatment'
-    heights.append(percent_coverage(all_district_geodata, attr, 'Allowed/Conditional'))
-    xlabels.append(attr)
-plt.bar(xlabels, heights)
-plt.title('% Base District Area Zoned By-Right,\n Chittenden and Addison Counties, VT')
-plt.tight_layout()
-plt.savefig('imgs/barplot_by-right.jpg')
-plt.clf()
+# Barplot of % area zoned with each due process requirement value for 1, 2, 3, and 4+ family treatments
+barplot_res_tx(all_district_geodata, ['Allowed/Conditional', 'Public Hearing'],
+               '% Base District Area Zoned For Residential Treatments,\nAllowed/Conditional or Public Hearing Required'
+               '\nChittenden and Addison Counties, VT')
+barplot_res_tx(all_district_geodata, 'Allowed/Conditional',
+               '% Base District Area Zoned By-Right,\n Chittenden and Addison Counties, VT')
+barplot_res_tx(all_district_geodata, 'Public Hearing',
+               '% Base District Area Requiring Public Hearing,\n Chittenden and Addison Counties, VT')
 
-# Barplot of % area requiring public hearing for 1, 2, 3, and 4+ family treatments
-xlabels = []
-heights = []
-for x in ['1', '2', '3', '4+']:
-    attr = x+'-Family Treatment'
-    heights.append(percent_coverage(all_district_geodata, attr, 'Public Hearing'))
-    xlabels.append(attr)
-plt.bar(xlabels, heights)
-plt.title('% Base District Area Requiring Public Hearing,\n Chittenden and Addison Counties, VT')
-plt.tight_layout()
-plt.savefig('imgs/barplot_public_hearing.jpg')
+# % of land zoned for 1-family housing and no other type of housing
+one_fam_only = pd.DataFrame(columns = all_district_geodata.columns)
+for index, row in all_district_geodata.iterrows():
+    if row['1-Family Treatment'] == 'Allowed/Conditional'or row['1-Family Treatment'] == 'Public Hearing':
+        if row['2-Family Treatment'] == 'Prohibited' and row['3-Family Treatment'] == 'Prohibited' \
+                and row['4+-Family Treatment'] == 'Prohibited':
+            one_fam_only.loc[len(one_fam_only)] = row
+print(str(round(100*sum(one_fam_only['area'])/sum(all_district_geodata['area']), 2)), '% of analyzed land zoned solely '
+                                                                                      'for 1-family housing')
+
+''' Lot Characteristics '''
+
+print('\nLOT CHARACTERISTICS')
+print(str(min_lot_size(all_district_geodata, '1-Family Min. Lot', 0.46)), '% of land zoned for 1-Family Treatment '
+                                                                          'has minimum lot size > 0.46 acres.')
+print(str(min_lot_size(all_district_geodata, '1-Family Min. Lot', 0.92)), '% of land zoned for 1-Family Treatment '
+                                                                          'has minimum lot size > 0.92 acres.')
+print(str(min_lot_size(all_district_geodata, '1-Family Min. Lot', 1.84)), '% of land zoned for 1-Family Treatment '
+                                                                          'has minimum lot size > 1.84 acres.')
 
 # Map due process requirements for residential treatments
 viz_allvals(all_district_geodata, '1-Family Treatment')
