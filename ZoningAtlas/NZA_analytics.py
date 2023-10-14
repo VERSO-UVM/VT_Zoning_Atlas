@@ -128,19 +128,26 @@ def barplot_res_tx(gdf, targetvals, title):
     plt.bar(xlabels, heights)
     plt.title(title)
     plt.tight_layout()
-    plt.savefig('imgs/barplot_' + targetvals + '.jpg')
+    if type(targetvals) == list:
+        filename = str([x.replace('/', '_') for x in targetvals])
+    else:
+        filename = targetvals.replace('/', '_')
+    plt.savefig('imgs/barplot_' + filename + '.jpg')
     plt.clf()
 
-def min_lot_size(gdf, att, minlotsize):
+def lot_size(gdf, att, minlotsize, max_or_min):
     gdf_copy = gdf.copy()
-    min_size = pd.DataFrame(columns = gdf_copy.columns)
+    min_or_max_size = pd.DataFrame(columns = gdf_copy.columns)
     for index, row in gdf_copy.iterrows():
         try:
-            if float(row[att]) > minlotsize:
-                min_size.loc[len(min_size)] = row
+            if float(row[att]) > minlotsize and max_or_min == 'min':
+                min_or_max_size.loc[len(min_or_max_size)] = row
+            else:
+                if float(row[att]) < minlotsize and max_or_min == 'max':
+                    min_or_max_size.loc[len(min_or_max_size)] = row
         except:
             pass
-    return round(100*sum(min_size['area'])/sum(gdf_copy['area']), 2)
+    return round(100*sum(min_or_max_size['area'])/sum(gdf_copy['area']), 2)
 
 ## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
 
@@ -306,18 +313,38 @@ print(str(round(100*sum(one_fam_only['area'])/sum(all_district_geodata['area']),
 ''' Lot Characteristics '''
 
 print('\nLOT CHARACTERISTICS')
-print(str(min_lot_size(all_district_geodata, '1-Family Min. Lot', 0.46)), '% of land zoned for 1-Family Treatment '
+print(str(lot_size(all_district_geodata, '1-Family Min. Lot', 0.46, 'min')), '% of land zoned for 1-Family Treatment '
                                                                           'has minimum lot size > 0.46 acres.')
-print(str(min_lot_size(all_district_geodata, '1-Family Min. Lot', 0.92)), '% of land zoned for 1-Family Treatment '
+print(str(lot_size(all_district_geodata, '1-Family Min. Lot', 0.92, 'min')), '% of land zoned for 1-Family Treatment '
                                                                           'has minimum lot size > 0.92 acres.')
-print(str(min_lot_size(all_district_geodata, '1-Family Min. Lot', 1.84)), '% of land zoned for 1-Family Treatment '
+print(str(lot_size(all_district_geodata, '1-Family Min. Lot', 1.84, 'min')), '% of land zoned for 1-Family Treatment '
                                                                           'has minimum lot size > 1.84 acres.')
 
+min_lot_size_reqs = [('None', 100 - lot_size(all_district_geodata, '1-Family Min. Lot', 0, 'min')),
+                     ('Any', lot_size(all_district_geodata, '1-Family Min. Lot', 0, 'min')),
+                     ('>0.46 ac', lot_size(all_district_geodata, '1-Family Min. Lot', 0.46, 'min')),
+                     ('>0.92 ac', lot_size(all_district_geodata, '1-Family Min. Lot', 0.92, 'min')),
+                     ('>1.84 ac', lot_size(all_district_geodata, '1-Family Min. Lot', 1.84, 'min'))]
+
+# Barplot of minimum lot sizes for 1-Family Housing
+
+# Option 1: Stacked barplot
+# for i in range(5):
+#     plt.bar(range(1), min_lot_size_reqs[i][1], label = min_lot_size_reqs[i][0])
+# plt.legend(bbox_to_anchor = (1, 0.5))
+# plt.tick_params(labelbottom = False, bottom = False)
+
+# Option 2: Traditional barplot
+plt.bar(range(5), [x[1] for x in min_lot_size_reqs], color=['green', 'dimgray', 'dimgray', 'dimgray', 'dimgray'])
+plt.title('Minimum Lot Size Requirements\nChittenden & Addison Counties, VT')
+plt.xticks(range(5), [x[0] for x in min_lot_size_reqs])
+plt.show()
+
 # Map due process requirements for residential treatments
-viz_allvals(all_district_geodata, '1-Family Treatment')
-viz_allvals(all_district_geodata, '2-Family Treatment')
-viz_allvals(all_district_geodata, '3-Family Treatment')
-viz_allvals(all_district_geodata, '4+-Family Treatment')
-viz_allvals(all_district_geodata, 'Accessory Dwelling Unit (ADU) Treatment')
-viz_allvals(all_district_geodata, 'Planned Residential Development (PRD) Treatment')
+# viz_allvals(all_district_geodata, '1-Family Treatment')
+# viz_allvals(all_district_geodata, '2-Family Treatment')
+# viz_allvals(all_district_geodata, '3-Family Treatment')
+# viz_allvals(all_district_geodata, '4+-Family Treatment')
+# viz_allvals(all_district_geodata, 'Accessory Dwelling Unit (ADU) Treatment')
+# viz_allvals(all_district_geodata, 'Planned Residential Development (PRD) Treatment')
 
