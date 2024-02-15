@@ -20,20 +20,41 @@ pacman::p_load(tidyverse, janitor, lubridate)
 
 ## VT Zoning Info
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This is R markdown script is....
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## The Data
+Jurisdictions....
 
-```{r cars}
-summary(cars)
+```{r jurisdictions}
+districts <- read.csv("../consolidated/district_zoning_data.csv")
 ```
 
-## Including Plots
+## Filtering 
+To represent current completed jurisdictions, those in progress are filtered out.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r jurisdictionComplete}
+districtsComplete <- 
+  districts |> 
+    #Filter to only keep completed districts
+    dplyr::filter(Status == "Completed") |> 
+      #Select desired columns
+      dplyr::select(County, Full.District.Name, Type.of.Zoning.District:X4..Family.Treatment) 
 ```
+
+```{r plotting affordable housing}
+districtsComplete +
+  ggplot()
+```
+
+
+
+
+
+
+
+
+
+
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
