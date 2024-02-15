@@ -1,0 +1,407 @@
+,Jurisdiction,County,Full District Name
+0,Westford,Chittenden County,Common District
+1,Westford,Chittenden County,Transect 1
+2,Westford,Chittenden County,Transect 2
+3,Westford,Chittenden County,Transect 3
+4,Westford,Chittenden County,Transect 4
+5,Westford,Chittenden County,Transect 5
+6,Westford,Chittenden County,Flood Hazard Overlay
+7,Westford,Chittenden County,Rural 10 District
+8,Westford,Chittenden County,Rural 3 District
+9,Westford,Chittenden County,Rural 5 District
+10,Westford,Chittenden County,Village District
+11,Westford,Chittenden County,Water Resources Overlay
+12,Leicester,Addison County,Conservation District
+13,Leicester,Addison County,Industrial District
+14,Leicester,Addison County,Lake Shore Districts: L1
+15,Leicester,Addison County,Lake Shore Districts: L2
+16,Leicester,Addison County,Residential Agricultural District
+17,Leicester,Addison County,Residential Agricultural Commercial District
+18,Leicester,Addison County,Village District
+19,Ripton,Addison County,Conservation
+20,Ripton,Addison County,Flood and River Corridor Overlay Zone
+21,Ripton,Addison County,Flood Hazard Overlay Zone
+22,Ripton,Addison County,High Density Residential
+23,Ripton,Addison County,Historic District
+24,Ripton,Addison County,Institutional
+25,Ripton,Addison County,Low Density Residential
+26,Ripton,Addison County,Medium Density Residential
+27,Ripton,Addison County,Neighborhood Commercial
+28,Ripton,Addison County,Rare Species Overlay Zone
+29,Ripton,Addison County,Rural Residential
+30,Cornwall,Addison County,Conservation
+31,Cornwall,Addison County,Low Density Residential
+32,Cornwall,Addison County,Medium Density Residential
+33,Cornwall,Addison County,Cornwall Village
+34,Cornwall,Addison County,West Cornwall Village
+35,Milton,Chittenden County,Interstate Commercial District
+36,Milton,Chittenden County,Downtown Business District
+37,Milton,Chittenden County,Forestry/Conservation/Scenic Ridgeline District
+38,Milton,Chittenden County,Light Industrial District
+39,Milton,Chittenden County,General Industrial District
+40,Milton,Chittenden County,Industrial Conservation District
+41,Milton,Chittenden County,Milton Crossroads Marketplace Center District
+42,Milton,Chittenden County,Milton Crossroads Marketplace West District
+43,Milton,Chittenden County,Milton Crossroads Marketplace Municipal/Recreation District
+44,Milton,Chittenden County,Checkerberry Commercial District
+45,Milton,Chittenden County,Checkerberry Residential District
+46,Milton,Chittenden County,Old Towne Residential/Commercial District
+47,Milton,Chittenden County,Main Street District
+48,Milton,Chittenden County,Checkerberry Neighborhood Center District
+49,Milton,Chittenden County,Historic Neighborhood Center District
+50,Milton,Chittenden County,Old Towne Residential District
+51,Milton,Chittenden County,Medium Density Residential District
+52,Milton,Chittenden County,Low Density Residential District
+53,Milton,Chittenden County,Transitional Residential District
+54,Milton,Chittenden County,Agricultural/Rural Residential District
+55,Milton,Chittenden County,Shoreland Residential District
+56,Milton,Chittenden County,Beaverbrook Residential District
+57,Shelburne,Chittenden County,Commerce & Industry
+58,Shelburne,Chittenden County,Commerce & Industry - South
+59,Shelburne,Chittenden County,Conservation
+60,Shelburne,Chittenden County,Floodplain & Watercourse Overlay
+61,Shelburne,Chittenden County,Lakeshore Overlay
+62,Shelburne,Chittenden County,Mixed Use District
+63,Shelburne,Chittenden County,Museum
+64,Shelburne,Chittenden County,Neighborhood Overlay
+65,Shelburne,Chittenden County,Residential
+66,Shelburne,Chittenden County,Rural
+67,Shelburne,Chittenden County,Shelburne Falls Mixed Use
+68,Shelburne,Chittenden County,Shelburne Road Form-Based Overlay
+69,Shelburne,Chittenden County,Stormwater Overlay
+70,Shelburne,Chittenden County,Village Center Mixed Use
+71,Shelburne,Chittenden County,Village Core Overlay
+72,Shelburne,Chittenden County,Village Design Review Overlay
+73,Shelburne,Chittenden County,Village Residential
+74,Arlington,Bennington County,Commercial-Industrial
+75,Arlington,Bennington County,Commercial-Residential
+76,Arlington,Bennington County,Commercial-Residential-Rural
+77,Arlington,Bennington County,Forest and Recreation
+78,Arlington,Bennington County,Planned Industrial
+79,Arlington,Bennington County,Residential Rural
+80,Arlington,Bennington County,Village-Residential District
+81,Colchester,Chittenden County,Agricultural
+82,Colchester,Chittenden County,Agricultural Mixed Use
+83,Colchester,Chittenden County,Business
+84,Colchester,Chittenden County,Commercial
+85,Colchester,Chittenden County,Floodplain
+86,Colchester,Chittenden County,General Development 1
+87,Colchester,Chittenden County,General Development 2
+88,Colchester,Chittenden County,General Development 3
+89,Colchester,Chittenden County,General Development 4
+90,Colchester,Chittenden County,Industrial
+91,Colchester,Chittenden County,Lakeshore One
+92,Colchester,Chittenden County,Lakeshore Two
+93,Colchester,Chittenden County,Lakeshore Three
+94,Colchester,Chittenden County,Lakeshore Four
+95,Colchester,Chittenden County,Mobile Home Park
+96,Colchester,Chittenden County,Residential One
+97,Colchester,Chittenden County,Residential Ten
+98,Colchester,Chittenden County,Residential Two
+99,Colchester,Chittenden County,Residential Three
+100,Colchester,Chittenden County,Residential Five
+101,Addison,Addison County,Conservation District
+102,Addison,Addison County,Flood Hazard Area Overlay District
+103,Addison,Addison County,Low Density Residential/Agricultural District
+104,Addison,Addison County,Recreational District
+105,Addison,Addison County,Shoreland Residential District
+106,Addison,Addison County,Village Neighborhood Commercial District
+107,Goshen,Addison County,Residential Agricultural Conservation District
+108,Goshen,Addison County,Village District
+109,Bristol,Addison County,Bristol Pond Camp
+110,Bristol,Addison County,Commercial
+111,Bristol,Addison County,Conservation
+112,Bristol,Addison County,Downtown Design Review Overlay
+113,Bristol,Addison County,High Density Residential
+114,Bristol,Addison County,Rural Agriculture1
+115,Bristol,Addison County,Rural Agriculture2
+116,Bristol,Addison County,Rural Agriculture5
+117,Bristol,Addison County,Recreational
+118,Bristol,Addison County,"Residential, Office, Commercial"
+119,Bristol,Addison County,Village Business
+120,Bristol,Addison County,Village Mixed
+121,Bristol,Addison County,Village Residential
+122,Essex,Chittenden County,Agricultural - Residential
+123,Essex,Chittenden County,Retail - Business
+124,Essex,Chittenden County,Conservation
+125,Essex,Chittenden County,Floodplain
+126,Essex,Chittenden County,Center
+127,Essex,Chittenden County,Historic Preservation - Design Control
+128,Essex,Chittenden County,Industrial
+129,Essex,Chittenden County,Mixed Use
+130,Essex,Chittenden County,Mixed Use Commercial
+131,Essex,Chittenden County,Mixed Use - Planned Unit Development
+132,Essex,Chittenden County,Open Recreation
+133,Essex,Chittenden County,Low Density Residential
+134,Essex,Chittenden County,Medium Density Residential
+135,Essex,Chittenden County,High Density Residential
+136,Essex,Chittenden County,Residential - Business
+137,Essex,Chittenden County,Resource Preservation District - Industrial
+138,Ferrisburgh,Addison County,Conservation District
+139,Ferrisburgh,Addison County,Ferrisburgh Town Center District
+140,Ferrisburgh,Addison County,Highway Mixed-Use District
+141,Ferrisburgh,Addison County,Industrial District
+142,Ferrisburgh,Addison County,North Ferrisburgh Village District
+143,Ferrisburgh,Addison County,Rural Agricultural District
+144,Ferrisburgh,Addison County,Rural Residential District
+145,Ferrisburgh,Addison County,Shoreland District
+146,Panton,Addison County,Flood Hazard Area
+147,Panton,Addison County,Neighborhood Commerical
+148,Panton,Addison County,Residential Agricultural
+149,Panton,Addison County,Residential 2
+150,Panton,Addison County,Residential 5
+151,Waltham,Addison County,Agricultural District
+152,Waltham,Addison County,Forest District
+153,Waltham,Addison County,Flood Hazard Overlay Area
+154,Waltham,Addison County,Highway Commercial District
+155,Waltham,Addison County,Municipal District
+156,Waltham,Addison County,Medium Density Residential District
+157,Waltham,Addison County,Low Density Residential District
+158,Salisbury,Addison County,Commercial
+159,Salisbury,Addison County,Conservation
+160,Salisbury,Addison County,Flood Hazard Overlay Areas
+161,Salisbury,Addison County,Forest
+162,Salisbury,Addison County,High Density Residential
+163,Salisbury,Addison County,Low Density Residential
+164,Salisbury,Addison County,Lake Shore 1
+165,Salisbury,Addison County,Lake Shore 2
+166,Salisbury,Addison County,Medium Density Residential
+167,Williston,Chittenden County,Agriculture/Rural
+168,Williston,Chittenden County,Business Park Zoning District
+169,Williston,Chittenden County,Gateway North Zoning District
+170,Williston,Chittenden County,Gateway South
+171,Williston,Chittenden County,Industrial East Zoning District
+172,Williston,Chittenden County,Industrial West Zoning District
+173,Williston,Chittenden County,Mixed Use - Commercial Zoning District
+174,Williston,Chittenden County,Residential Zoning District
+175,Williston,Chittenden County,Taft Corners Downtown Zoning District
+176,Williston,Chittenden County,Village Center Zoning District
+177,Whiting,Addison County,Commercial District
+178,Whiting,Addison County,Conservation District
+179,Whiting,Addison County,Low Density Residential District
+180,Whiting,Addison County,Medium Density Residential District
+181,Hinesburg,Chittenden County,Agricultural District
+182,Hinesburg,Chittenden County,Commercial District
+183,Hinesburg,Chittenden County,Industrial District 1
+184,Hinesburg,Chittenden County,Industrial District 2
+185,Hinesburg,Chittenden County,Industrial District 3
+186,Hinesburg,Chittenden County,Industrial District 4
+187,Hinesburg,Chittenden County,Residential 1 District
+188,Hinesburg,Chittenden County,Residential 2 District
+189,Hinesburg,Chittenden County,Rural Residential District 1
+190,Hinesburg,Chittenden County,Rural Residential District 2
+191,Hinesburg,Chittenden County,Shoreline
+192,Hinesburg,Chittenden County,Village District
+193,Hinesburg,Chittenden County,Village Northeast District
+194,Hinesburg,Chittenden County,Village Northwest District
+195,Orwell,Addison County,Conservation
+196,Orwell,Addison County,Flood Hazard Overlay
+197,Orwell,Addison County,Medium Density Residential
+198,Orwell,Addison County,Neighborhood Commercial
+199,Orwell,Addison County,Rural
+200,Orwell,Addison County,Shoreland Overlay_LakeChamplain
+201,Orwell,Addison County,Shoreland Overlay_SunriseLake
+202,Orwell,Addison County,Village
+203,Saint George,Chittenden County,Low-Density Residential District
+204,Saint George,Chittenden County,Medium-Density Residential District
+205,Saint George,Chittenden County,Rural Development District
+206,Saint George,Chittenden County,Village Center District
+207,Saint George,Chittenden County,Village Center Reserve District
+208,Saint George,Chittenden County,Village Neighborhood District
+209,New Haven,Addison County,Forest District
+210,New Haven,Addison County,Flood Hazard District
+211,New Haven,Addison County,Highway Commercial District
+212,New Haven,Addison County,Industrial District
+213,New Haven,Addison County,Neighborhood Commercial District
+214,New Haven,Addison County,Rural Agricultural (RA-10) District
+215,New Haven,Addison County,Rural Agricultural (RA-2) District
+216,New Haven,Addison County,Rural Agricultural (RA-5) District
+217,Rutland City,Rutland County,Courthouse
+218,Rutland City,Rutland County,Downtown Business
+219,Rutland City,Rutland County,Gateway Business - 1
+220,Rutland City,Rutland County,Gateway Business - 2
+221,Rutland City,Rutland County,Gateway Business - Routes 4 & 7
+222,Rutland City,Rutland County,Gateway Business - Gouger Hill
+223,Rutland City,Rutland County,Gateway Business - North Main Street
+224,Rutland City,Rutland County,Gateway Business - South Main Street
+225,Rutland City,Rutland County,Gateway Business - State & West Streets
+226,Rutland City,Rutland County,Gateway Business - Woodstock Ave
+227,Rutland City,Rutland County,Industrial
+228,Rutland City,Rutland County,Mixed Residential 1
+229,Rutland City,Rutland County,Mixed Residential 2
+230,Rutland City,Rutland County,Main Street Park
+231,Rutland City,Rutland County,Neighborhood Business
+232,Rutland City,Rutland County,Park
+233,Rutland City,Rutland County,Planned Office Park
+234,Rutland City,Rutland County,Single-Family Residential
+235,Bridport,Addison County,Conservation District
+236,Bridport,Addison County,Neighborhood Commercial District
+237,Bridport,Addison County,Residential District
+238,Bridport,Addison County,Residential Agricultural District
+239,Bridport,Addison County,Shoreland Planned Residential District
+240,Bridport,Addison County,Village District
+241,Vergennes,Addison County,Archaeological Overlay District
+242,Vergennes,Addison County,Central Business District
+243,Vergennes,Addison County,Commercial District
+244,Vergennes,Addison County,High Density Residential District
+245,Vergennes,Addison County,Historic Neighborhood District
+246,Vergennes,Addison County,Industrial District
+247,Vergennes,Addison County,Low Density Residential District
+248,Vergennes,Addison County,Medium Density Residential District
+249,Vergennes,Addison County,Northern Gateway District
+250,Vergennes,Addison County,Otter Creek Basin District
+251,Vergennes,Addison County,Public District
+252,Vergennes,Addison County,Residential/Limited Business District
+253,Vergennes,Addison County,Solar Energy Overlay District
+254,Monkton,Addison County,Conservation District - Prohibited
+255,Monkton,Addison County,Flood Hazard Overlay District
+256,Monkton,Addison County,Natural Heritage Protection Overlay District
+257,Monkton,Addison County,Monkton Pond Overlay District
+258,Monkton,Addison County,High Density Village District
+259,Monkton,Addison County,Medium Density Rural Agricultural District
+260,Monkton,Addison County,Low Density Rural Agricultural District
+261,Monkton,Addison County,Rural Agricultural District Village
+262,Monkton,Addison County,Ridgeline Overlay District
+263,Buels Gore,Chittenden County,Design Review
+264,Buels Gore,Chittenden County,Forestry and Conservation One
+265,Buels Gore,Chittenden County,Forestry and Conservation Two
+266,Buels Gore,Chittenden County,Ridgetop
+267,Bolton,Chittenden County,Conservation
+268,Bolton,Chittenden County,Flood Hazard Overlay I
+269,Bolton,Chittenden County,Flood Hazard Overlay II
+270,Bolton,Chittenden County,Forest
+271,Bolton,Chittenden County,Rural I
+272,Bolton,Chittenden County,Rural II
+273,Bolton,Chittenden County,Resort Residential
+274,Bolton,Chittenden County,Resort Village
+275,Bolton,Chittenden County,Village
+276,Shoreham,Addison County,Agricultural District
+277,Shoreham,Addison County,Flood Hazard Overlay District
+278,Shoreham,Addison County,Low Density Residential
+279,Shoreham,Addison County,Medium Density Residential
+280,Shoreham,Addison County,Village Commercial District
+281,Shoreham,Addison County,Village Residential District
+282,Charlotte,Chittenden County,Commercial/Light Residential
+283,Charlotte,Chittenden County,Conservation
+284,Charlotte,Chittenden County,East Charlotte Village
+285,Charlotte,Chittenden County,Flood Hazard Area Overlay
+286,Charlotte,Chittenden County,Route 7 Scenic Overlay
+287,Charlotte,Chittenden County,Rural
+288,Charlotte,Chittenden County,Shoreland Seasonal Home Management
+289,Charlotte,Chittenden County,Shoreland
+290,Charlotte,Chittenden County,Village Commercial
+291,Charlotte,Chittenden County,West Charlotte Village
+292,Burlington,Chittenden County,Downtown Waterfront - Public Trust
+293,Burlington,Chittenden County,Enterprise - Agricultural Processing and Energy
+294,Burlington,Chittenden County,Enterprise - Light Manufacturing
+295,Burlington,Chittenden County,Downtown Center
+296,Burlington,Chittenden County,Downtown Core
+297,Burlington,Chittenden County,Institutional
+298,Burlington,Chittenden County,Neighborhood Activity Center
+299,Burlington,Chittenden County,Neighborhood Activity Center - Cambrian Rise
+300,Burlington,Chittenden County,Neighborhood Activity Center - Riverside
+301,Burlington,Chittenden County,Neighborhood Mixed Use
+302,Burlington,Chittenden County,RCO - Agriculture
+303,Burlington,Chittenden County,RCO - Conservation
+304,Burlington,Chittenden County,RCO - Recreation/Greenspace
+305,Burlington,Chittenden County,Residential - High Density
+306,Burlington,Chittenden County,Residential - Low Density
+307,Burlington,Chittenden County,Waterfront Residential - Low Density
+308,Burlington,Chittenden County,Residential - Medium Density
+309,Burlington,Chittenden County,Waterfront Residential - Medium Density
+310,Burlington,Chittenden County,Urban Reserve
+311,Essex Junction,Chittenden County,Flood Plain
+312,Essex Junction,Chittenden County,Highway - Arterial
+313,Essex Junction,Chittenden County,Light Industrial
+314,Essex Junction,Chittenden County,Mixed Commercial Use District
+315,Essex Junction,Chittenden County,Multi-Family Residential 1
+316,Essex Junction,Chittenden County,Mult-Family Residential 2
+317,Essex Junction,Chittenden County,Multi-Family Residential 3
+318,Essex Junction,Chittenden County,Multi-Family/Mixed-Use-1 District
+319,Essex Junction,Chittenden County,Multi-Family/Mixed-Use-2 District
+320,Essex Junction,Chittenden County,Open Space District
+321,Essex Junction,Chittenden County,Planned Agriculture
+322,Essex Junction,Chittenden County,Planned Exposition
+323,Essex Junction,Chittenden County,Residential 1
+324,Essex Junction,Chittenden County,Residential 2
+325,Essex Junction,Chittenden County,Residential - Office
+326,Essex Junction,Chittenden County,Transit Oriented Development
+327,Essex Junction,Chittenden County,Village Center
+328,Starksboro,Addison County,"Agricultural, Scenic, Rural Residential Corridors"
+329,Starksboro,Addison County,Forestry and Conservation
+330,Starksboro,Addison County,Flood Hazard Overlay District
+331,Starksboro,Addison County,High Density Residential and Commercial
+332,Starksboro,Addison County,Low Density Residential and Commercial
+333,Starksboro,Addison County,Medium Density Residential and Commercial
+334,Starksboro,Addison County,Watershed Protection
+335,Lincoln,Addison County,Flood Hazard Overlay Area
+336,Lincoln,Addison County,Outlying
+337,Lincoln,Addison County,River Overlay Area
+338,Lincoln,Addison County,Transitional
+339,Lincoln,Addison County,Village
+340,Lincoln,Addison County,Viewshed Overlay Area
+341,Weybridge,Addison County,Conservation District
+342,Weybridge,Addison County,Flood Hazard Area District
+343,Weybridge,Addison County,High Density Residential District
+344,Weybridge,Addison County,Medium Density Residential District
+345,Weybridge,Addison County,Neighborhood Commercial District
+346,Weybridge,Addison County,Planned Agricultural Residential District
+347,Huntington,Chittenden County,Conservation District
+348,Huntington,Chittenden County,Flood Hazard Areas
+349,Huntington,Chittenden County,Groundwater Protection Overlay District
+350,Huntington,Chittenden County,Neighborhood District
+351,Huntington,Chittenden County,Rural Residential District
+352,Huntington,Chittenden County,Village Center District
+353,Huntington,Chittenden County,Woodland District
+354,Underhill,Chittenden County,Floor Hazard Overlay District
+355,Underhill,Chittenden County,Mt Mansfield Scenic Preservation District
+356,Underhill,Chittenden County,Rural Residential District
+357,Underhill,Chittenden County,Soil and Water Conservation District
+358,Underhill,Chittenden County,Underhill Center Village District
+359,Underhill,Chittenden County,Underhill Flats Village Center District
+360,Underhill,Chittenden County,Water Conservation District
+361,Jericho,Chittenden County,Commercial District
+362,Jericho,Chittenden County,Forestry District
+363,Jericho,Chittenden County,Low Density Residential District
+364,Jericho,Chittenden County,Natural Resources Overlay
+365,Jericho,Chittenden County,Open Space District
+366,Jericho,Chittenden County,Rural/Agriculture Residential District
+367,Jericho,Chittenden County,Riverside Character District 3
+368,Jericho,Chittenden County,Riverside Character District 4
+369,Jericho,Chittenden County,Riverside Civil Zone
+370,Jericho,Chittenden County,River Overlay
+371,Jericho,Chittenden County,Village Center District
+372,Jericho,Chittenden County,Village District
+373,Jericho,Chittenden County,Wetlands Overlay
+374,Jericho,Chittenden County,Wellhead Protection Area Overlay
+375,Winooski,Chittenden County,Central Business District
+376,Winooski,Chittenden County,General Commercial
+377,Winooski,Chittenden County,Downtown Core
+378,Winooski,Chittenden County,Gateway District
+379,Winooski,Chittenden County,Industrial
+380,Winooski,Chittenden County,Public
+381,Winooski,Chittenden County,Residential A
+382,Winooski,Chittenden County,Residential B
+383,Winooski,Chittenden County,Residential C
+384,Brandon,Rutland County,Aquifer Protection Area
+385,Brandon,Rutland County,Central Business District
+386,Brandon,Rutland County,High Density Multi-Use
+387,Brandon,Rutland County,Neighborhood Residential
+388,Brandon,Rutland County,Rural Development
+389,Middlebury,Addison County,Airport District
+390,Middlebury,Addison County,Agricultural/Rural District
+391,Middlebury,Addison County,Central Business District
+392,Middlebury,Addison County,Fluvial Erosion Hazard Overlay
+393,Middlebury,Addison County,Forest/Conservation District
+394,Middlebury,Addison County,General Commercial District
+395,Middlebury,Addison County,Heritage Industrial District
+396,Middlebury,Addison County,Industrial District
+397,Middlebury,Addison County,Institutional District
+398,Middlebury,Addison County,Mixed Use District
+399,Middlebury,Addison County,Protected Highway District
+400,Middlebury,Addison County,Residential 12 District
+401,Middlebury,Addison County,Residential 2 District
+402,Middlebury,Addison County,Residential 20 District
+403,Middlebury,Addison County,Residential 4 District
+404,Middlebury,Addison County,Residential 8 District
+405,Middlebury,Addison County,Special Flood Hazard Area
