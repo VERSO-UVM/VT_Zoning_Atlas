@@ -53,3 +53,9 @@ The GIS Specialist team of volunteers:
 * Updates attribute tables with required columns according to the National Zoning Atlas methodology
 * Reports up any complications, problems, or questions to the Project Director for technical assistance
 * Uploads completed files to the National Zoning Atlas Editor workspace for review and publication
+
+## Set Up
+* [Git](https://www.git-scm.com/downloads) 
+* [GitHub Desktop](https://desktop.github.com/)
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [ArcGIS](https://uvm.maps.arcgis.com/sharing/rest/oauth2/authorize)
