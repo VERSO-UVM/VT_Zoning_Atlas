@@ -1,0 +1,60 @@
+---
+title: "ZoningData"
+author: "Tucker Schulz"
+date: "2024-02-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#Knit settings 
+knitr::opts_chunk$set(echo = TRUE,
+                      #warning = F,
+                      #message = F,
+                      fig.align = "center")
+
+# Install necessary packages
+pacman::p_load(tidyverse, janitor, lubridate)
+
+
+```
+
+## VT Zoning Info
+
+This is R markdown script is....
+
+## The Data
+Jurisdictions....
+
+```{r jurisdictions}
+districts <- read.csv("../consolidated/district_zoning_data.csv")
+```
+
+## Filtering 
+To represent current completed jurisdictions, those in progress are filtered out.
+
+```{r jurisdictionComplete}
+districtsComplete <- 
+  districts |> 
+    #Filter to only keep completed districts
+    dplyr::filter(Status == "Completed") |> 
+      #Select desired columns
+      dplyr::select(County, Full.District.Name, Type.of.Zoning.District:X4..Family.Treatment) 
+```
+
+```{r plotting affordable housing}
+districtsComplete +
+  ggplot()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
