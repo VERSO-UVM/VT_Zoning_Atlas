@@ -3,8 +3,10 @@ import arcpy #this is just to avoide annoying warnings while editing in ide
 
 def main():
     district = input("Enter the name of your town district: ")
+    #For confirmation of correct district input
     print(district)
-
+    #calling the geoProccesses for district
+    geoProcesses(district)
 
 #Zack's workflow to be turned into script:
 
