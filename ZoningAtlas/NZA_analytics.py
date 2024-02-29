@@ -181,7 +181,7 @@ else:
     all_district_geodata = gpd.read_file("consolidated/district_geodata.geojson")
 
 if(os.path.exists('consolidated/district_zoning_data.csv') == False):
-    all_district_zoning_data = pd.DataFrame(all_district_geodata, copy = True).drop(columns = ['geometry','area'])
+    all_district_zoning_data = consolidate_data('districts', 'zoning')
     all_district_zoning_data.to_csv('consolidated/district_zoning_data.csv')
     print('Consolidated district zoning data created.')
 else:
@@ -244,7 +244,7 @@ plt.clf()
 print('\nPresence of zoning')
 print('----------------------')
 print('Number of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes'])
-print('Percentage of jurisdictions with zoning: ', all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes']/len(all_jxtn_data))
+print('Percentage of jurisdictions with zoning: ', round(all_jxtn_data['Does It Have Zoning?'].value_counts()['Yes']/len(all_jxtn_data), 4)*100)
 
 # Map zoned versus unzoned districts
 cmap = (mpl.colors.ListedColormap(['lightgray', 'green']))
@@ -267,8 +267,8 @@ print('Total number of pages of zoning text analyzed: ', np.sum(all_jxtn_footpri
 print('Average number of pages per zoning text: ', round(np.average(all_jxtn_footprints['# of Pages in the Zoning Code']), 1))
 
 # Shortest and longest texts
-minpages = np.min(all_jxtn_footprints.loc[all_jxtn_footprints['# of Pages in the Zoning Code']!=0]['# of Pages in the Zoning Code'])
-print('Shortest zoning text: ', str(minpages) + ' pages\nJurisdiction(s):', str(all_jxtn_data.loc[all_jxtn_footprints['# of Pages in the Zoning Code'] == minpages]['Jurisdiction']))
+minpages = np.min(all_jxtn_footprints.loc[all_jxtn_footprints['# of Pages in the Zoning Code']>1]['# of Pages in the Zoning Code'])
+print('Shortest zoning text: ', str(minpages) + ' pages\nJurisdiction(s):', str(all_jxtn_footprints.loc[all_jxtn_footprints['# of Pages in the Zoning Code'] == minpages]['Jurisdiction']))
 maxpages = np.max(all_jxtn_footprints['# of Pages in the Zoning Code'])
 print('Longest zoning text: ', str(maxpages) + ' pages\nJurisdiction(s):', str(all_jxtn_footprints.loc[all_jxtn_footprints['# of Pages in the Zoning Code'] == maxpages]['Jurisdiction']))
 
@@ -304,15 +304,15 @@ viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Nonresidential'
 # Barplot of % area zoned with each due process requirement value for 1, 2, 3, and 4+ family treatments
 barplot_res_tx(all_district_geodata, ['Allowed/Conditional', 'Public Hearing'],
                '% Base District Area Zoned For Residential Treatments,\nAllowed/Conditional or Public Hearing Required'
-               '\nChittenden and Addison Counties, VT')
+               '\nAll Mapped Counties, VT')
 barplot_res_tx(all_district_geodata, 'Allowed/Conditional',
-               '% Base District Area Zoned By-Right,\n Chittenden and Addison Counties, VT')
+               '% Base District Area Zoned By-Right,\nAll Mapped Counties, VT')
 barplot_res_tx(all_district_geodata, 'Public Hearing',
-               '% Base District Area Requiring Public Hearing,\n Chittenden and Addison Counties, VT')
+               '% Base District Area Requiring Public Hearing,\n All Mapped Counties, VT')
 
 # % of land zoned for 1-family housing and no other type of housing
 one_fam_only = pd.DataFrame(columns = all_district_geodata.columns)
-for index, row in all_district_geodata.iterrows():
+for index, row in all_district_zoning_data.iterrows():
     if row['1-Family Treatment'] == 'Allowed/Conditional'or row['1-Family Treatment'] == 'Public Hearing':
         if row['2-Family Treatment'] == 'Prohibited' and row['3-Family Treatment'] == 'Prohibited' \
                 and row['4+-Family Treatment'] == 'Prohibited':
@@ -352,9 +352,10 @@ plt.pie([nominlotsize, lessthan46, anyminlotsize - greaterthan92 - lessthan46,
         wedgeprops = { 'linewidth' : 7, 'edgecolor' : 'white' })
 my_circle=plt.Circle( (0,0), 0.7, color='white')
 p=plt.gcf()
-plt.title('Minimum lot size requirements\nChittenden & Addison Counties, VT')
+plt.title('Minimum lot size requirements\nAll analyzed VT jurisdictions')
 p.gca().add_artist(my_circle)
-plt.show()
+plt.savefig('imgs/min_lot_size_donut.jpg')
+plt.clf()
 
 # Barplot of minimum lot sizes for 1-Family Housing
 
@@ -363,12 +364,15 @@ for i in range(5):
     plt.bar(range(1), min_lot_size_reqs[i][1], label = min_lot_size_reqs[i][0])
 plt.legend(bbox_to_anchor = (1, 0.5))
 plt.tick_params(labelbottom = False, bottom = False)
+plt.savefig('imgs/barplot_minlotsize_stacked.jpg')
+plt.clf()
 
 # Option 2: Traditional barplot
 plt.bar(range(5), [x[1] for x in min_lot_size_reqs], color=['green', 'dimgray', 'dimgray', 'dimgray', 'dimgray'])
 plt.title('Minimum Lot Size Requirements\nAll Mapped Districts, VT')
 plt.xticks(range(5), [x[0] for x in min_lot_size_reqs])
-plt.show()
+plt.savefig('imgs/barplot_minlotsize.jpg')
+plt.clf()
 
 # Map due process requirements for residential treatments
 viz_allvals(all_district_geodata, '1-Family Treatment')
