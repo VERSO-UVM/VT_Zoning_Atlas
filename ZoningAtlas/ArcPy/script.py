@@ -1,45 +1,58 @@
-#importing arcpy tools
 import arcpy
-
-
-# before further work: https://learn.arcgis.com/en/projects/automate-a-geoprocessing-workflow-with-python/
-
-
-
-
+def main():
+    jurisdiction = input("Enter the name of your town jurisdiction: ")
+    #For confirmation of correct jurisdiction input
+    print(jurisdiction)
+    #calling the geoProccesses for jurisdiction
+    geoProcesses(jurisdiction)
 
 #Zack's workflow to be turned into script:
 
-# #project shapefile
-# arcpy.managment.Project(‘.shp file’, ‘Town_32145’, ‘32145’)
-# #project TIGER
-# arcpy.managment.Project(‘TIGER file’, ‘TIGER_32145’, ‘32145’)
-# #arcpy command to repair geometry for both the TIGER and 32145
-# arcpy.management.RepairGeometry(‘Town.gdb/Town_32145’)
-# arcpy.management.RepairGeometry(‘Town.gdb/TIGER_32145’)
-# #arcpy command to enable snaping and set snap tolerance to like 100
-# #maybe just do this manually
+def geoProcesses(town):
+    
+    
+    #create mobile geodatabase to avoid issues with locks
+    arcpy.management.CreateMobileGDB(arcpy.mp.ArcGISProject("CURRENT").filePath, town+'_mobile.gdb')
+    
+    
+    #BEFORE ANYTHING ELSE GETS CODED WE NEED A WAY TO ACCESS THE PATH TO THE PROJECT FOLDER
+        #we need to also import the .shp file and 'json to features' tool that TIGER
+    
+    #project shapefile
+ #   arcpy.management.Project(town, town+'_32145', '32145')
 
-# #arcpy command to snap vertex for like 50 meters
-# #arcpy command to snap edge for like 50 meters
-# arcpy.edit.Snap(‘Town.gdb/Town_32145’,
-#         [[‘Town.gdb/TIGER_32145’, ‘VERTEX’, ’50 Meters’],
-#          [‘Town.gdb/TIGER_32145’, ‘EDGE’, ’50 Meters’]])
 
-# #Topology must be last step before manual edits. Datasets LOCK FEATURE CLASSES IN, because administration hates the working man! Idk its stupid. //
-# #create dataset
-# arcpy.managment.CreateFeatureDataset(‘Town.gdb’, ‘Town’)
+    #project TIGER
+ #  arcpy.management.Project('TIGER', 'TIGER_32145', '32145')
+    #arcpy command to repair geometry for both the TIGER and 32145
+ #  arcpy.management.RepairGeometry(town+'.gdb/'+town+'_32145')
+ #  arcpy.management.RepairGeometry(town+'.gdb/TIGER_32145')
+    #arcpy command to enable snaping and set snap tolerance to like 100
+    #maybe just do this manually
 
-# #move files into dataset
-# arcpy.management.TransferFiles(‘Town.gdb/Town_32145’, ‘Town.gdb/Town’,)
-# arcpy.management.TransferFiles(‘Town.gdb/TIGER_32145’, ‘Town.gdb/Town’,)
+    #arcpy command to snap vertex for like 50 meters
+    #arcpy command to snap edge for like 50 meters
+ #   arcpy.edit.Snap(town+'.gdb/'+town+'_32145',
+ #           [[town+'.gdb/TIGER_32145', 'VERTEX', '50 Meters'],
+ #           [town+'.gdb/TIGER_32145', 'EDGE', '50 Meters']])
 
-# #create overlap/gap topology
-# arcpy.managment.CreateTopology(‘Town.gdb/Town’, ‘Town_Zoning_Topology’, ‘1’)
+    #Topology must be last step before manual edits. Datasets LOCK FEATURE CLASSES IN.
+    #create dataset
+    sr = arcpy.SpatialReference(32145)
+    arcpy.management.CreateFeatureDataset(town+'.gdb', town, sr)
 
-# #add 32145 to overlap/gap topology
-# arcpy.managment.AddFeatureClassToTopology(‘Town.gdb/Town/Town_Zoning_Topology’, ‘Town.gdb/Town/Town_32145’, ‘1’, ‘1’)
+    #move files into dataset
+#    arcpy.management.Copy(town+'_mobile.gdb/'+town+'_32145', town+'_mobile.gdb/'+town,)
+ #   arcpy.management.Copy(town+'_mobile.gdb/TIGER_32145', town+'_mobile.gdb/'+town,)
 
-# #add rules to overlap/gap
-# arcpy.managment.AddRuleToTopology(‘Town.gdb/Town/Town_Zoning_Topology’, ‘Must Not Have Gaps (Area)’, ‘Town.gdb/Town/Town_32145’)
-# arcpy.managment.AddRuleToTopology(‘Town.gdb/Town/Town_Zoning_Topology’, ‘Must Not Overlap (Area)’, ‘Town.gdb/Town/Town_32145’)
+    #create overlap/gap topology
+#    arcpy.management.CreateTopology(town+'_mobile.gdb/'+town, town+'_Zoning_Topology', '1')
+
+    #add 32145 to overlap/gap topology
+#    arcpy.management.AddFeatureClassToTopology(town+'_mobile.gdb/'+town+'1'+'/'+town+'_Zoning_Topology', town+'_mobile.gdb/'+town+'1'+'/'+town+'_32145', '1', '1')
+
+    #add rules to overlap/gap
+#    arcpy.management.AddRuleToTopology(town+'_mobile.gdb/'+town+'/'+town+'_Zoning_Topology', 'Must Not Have Gaps (Area)', town+'_mobile.gdb/'+town+'/'+town+'_32145')
+#    arcpy.management.AddRuleToTopology(town+'_mobile.gdb/'+town+'/'+town+'_Zoning_Topology', 'Must Not Overlap (Area)', town+'_mobile.gdb/'+town+'/'+town+'_32145')
+    
+main()

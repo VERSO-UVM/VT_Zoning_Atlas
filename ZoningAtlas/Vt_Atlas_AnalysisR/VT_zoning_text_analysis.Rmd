@@ -23,38 +23,64 @@ pacman::p_load(tidyverse, janitor, lubridate)
 This is R markdown script is....
 
 ## The Data
-Jurisdictions....
 
 ```{r jurisdictions}
-districts <- read.csv("../consolidated/district_zoning_data.csv")
+districts <- read.csv("../consolidated/district_zoning_data.csv") |> 
+  clean_names()
 ```
 
-## Filtering 
+## Filtering
+
 To represent current completed jurisdictions, those in progress are filtered out.
 
-```{r jurisdictionComplete}
+```{r jurisdictionComplete, echo=TRUE}
 districtsComplete <- 
   districts |> 
-    #Filter to only keep completed districts
-    dplyr::filter(Status == "Completed") |> 
+    #Filter to only keep completed residential districts
+    dplyr::filter(status == "Completed" & type_of_zoning_district != "Nonresidential") |> 
       #Select desired columns
-      dplyr::select(County, Full.District.Name, Type.of.Zoning.District:X4..Family.Treatment) 
+      dplyr::select(county, full_district_name, type_of_zoning_district:x4_family_treatment) |> 
+          pivot_longer(
+            cols = c(x1_family_treatment:x4_family_treatment),
+            names_to = "family_treatment",
+            values_to = "allowed/unallowed"
+          ) |> 
+    dplyr::mutate(
+      family_size = parse_number(family_treatment)
+    )
+
 ```
 
-```{r plotting affordable housing}
-districtsComplete +
-  ggplot()
+## County Summaries
+
+-   affordable_housing: a count of affordable housing districts by county 
+-   multi_family_house: a count of districts with multi-family (3+) housing allowed
+-   elderly_housing: a count of elderly housing districts by county 
+
+```{r county summaries}
+county_summaries <- districtsComplete |> 
+  #grouped by county for county comparisons
+  dplyr::group_by(county) |> 
+  
+  #creating above summary columns and removing na values
+  dplyr::summarise(affordable_housing = sum(affordable_housing_district == "Yes", na.rm = TRUE),
+                   multi_family_housing = sum(family_size %in% c(3, 4, 5) & 
+                                               `allowed/unallowed` %in% c("Allowed/Conditional", "Public Hearing"), na.rm = TRUE),
+                   eldery_housing = sum(elderly_housing_district == "Yes", na.rm = TRUE)
+                   ) |> 
+  dplyr::arrange(county) 
+  
+tibble(county_summaries)
 ```
 
+## Multi-family housing by county
+
+```{r county comparisons}
 
 
 
 
-
-
-
-
-
+```
 
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
