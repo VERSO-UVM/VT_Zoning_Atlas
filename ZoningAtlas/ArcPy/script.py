@@ -2,21 +2,26 @@ import arcpy
 import os.path
 def main():
     jurisdiction = input("Enter the name of your town jurisdiction: ")
-    #For confirmation of correct jurisdiction input
-    print(jurisdiction)
-    #calling the geoProccesses for jurisdiction
-    geoProcesses(jurisdiction)
+    
+    #needed global variables
+    filePath = arcpy.mp.ArcGISProject("CURRENT").filePath 
+    dirName = os.path.dirname(filePath)
+    downloaded = dirName+'/Downloaded'
 
+    #file management, projection, and TIGER
+    geoFileManagement(jurisdiction, downloaded)
+
+    next = input("Ready for geo proccesses?(t/f):").lower()
+    while next not in ["t", "f"]:
+        next = input("Check for valid input \n Ready for geo proccesses?(t/f):").lower()
+
+    if next == "t":
+        geoProcess(dirName, jurisdiction)
+
+    
 #Zack's workflow to be turned into script:
 
-def geoProcesses(town):
-    
-    
-    filePath = arcpy.mp.ArcGISProject("CURRENT").filePath
-    
-    dirName = os.path.dirname(filePath)
-    
-    downloaded = dirName+'/Downloaded'
+def geoFileManagement(town, downloaded):
    
     # Part 1: Files geodatabase and snapping
 
@@ -36,10 +41,10 @@ def geoProcesses(town):
     arcpy.management.RepairGeometry(town+'.gdb/'+town+'_32145')
     arcpy.management.RepairGeometry(town+'.gdb/TIGER_32145')
 
+    print("Finished geoFileManagemet\n")
+    #break
 
-
-#break
-
+def geoProcess(dirName, town):
     #Part 2 : create mobile geodatabase and topology
     
     #create mobile geodatabase to avoid issues with locks
@@ -49,7 +54,6 @@ def geoProcesses(town):
     arcpy.management.CopyFeatures(town+'.gdb/'+town+'_32145', town+'Mobile.geodatabase/'+town+'_32145')
 
     arcpy.management.CopyFeatures(town+'.gdb/TIGER_32145', town+'Mobile.geodatabase/TIGER_32145')
-
 
     #create dataset
     sr = arcpy.SpatialReference(32145)
