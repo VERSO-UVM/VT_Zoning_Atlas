@@ -43,9 +43,10 @@ districtsComplete <-
           pivot_longer(
             cols = c(x1_family_treatment:x4_family_treatment),
             names_to = "family_treatment",
-            values_to = "allowed/unallowed"
+            values_to = "allowed"
           ) |> 
     dplyr::mutate(
+      x5_family_treatment = if_else(districts$x5_family_min_lot_acres == NA, "No", "Yes"),
       family_size = parse_number(family_treatment)
     )
 
@@ -65,7 +66,7 @@ county_summaries <- districtsComplete |>
   #creating above summary columns and removing na values
   dplyr::summarise(affordable_housing = sum(affordable_housing_district == "Yes", na.rm = TRUE),
                    multi_family_housing = sum(family_size %in% c(3, 4, 5) & 
-                                               `allowed/unallowed` %in% c("Allowed/Conditional", "Public Hearing"), na.rm = TRUE),
+                                               allowed %in% c("Allowed/Conditional", "Public Hearing"), na.rm = TRUE),
                    eldery_housing = sum(elderly_housing_district == "Yes", na.rm = TRUE)
                    ) |> 
   dplyr::arrange(county) 
@@ -75,10 +76,45 @@ tibble(county_summaries)
 
 ## Multi-family housing by county
 
+As of right now this only looks at family sizes of 3 and 4, need pivot longer x5 columns to make a x5 treatment.
+
 ```{r county comparisons}
 
+countySumsGG <- districtsComplete |> 
+  dplyr::filter(family_size > 2)
+
+  
 
 
+
+ggplot(data = countySumsGG,
+       mapping = aes(x = county)) +
+  
+  geom_bar(aes(fill = allowed),
+           position = "dodge2") + 
+  labs(x = "Counties",
+       y = "Multi Family Housing Districts",
+       fill = "Status") +
+  
+  theme_bw() +
+  
+  scale_fill_manual(
+    values = c(
+      "Allowed/Conditional" = "blue",
+      "Overlay" = "green",
+      "Prohibited" = "red",
+      "Public Hearing" = "purple"
+    )
+  ) +
+  
+  # Add this to your graph to center the title and rotate the x-axis text and remove #
+   theme(
+     axis.title.x = element_blank(),
+     panel.background = element_blank(),
+     plot.title = element_text(hjust = 0.5),
+     axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
+   ) +
+  scale_y_continuous(expand = c(0, 0, 0.05, 0)) 
 
 ```
 
