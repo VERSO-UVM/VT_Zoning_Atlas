@@ -13,9 +13,8 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.align = "center")
 
 # Install necessary packages
-pacman::p_load(tidyverse, janitor, lubridate, ggthemes, devtools)
+pacman::p_load(tidyverse, janitor, lubridate, ggthemes, )
 
-devtools::install_github("UrbanInstitute/urbnmapr")
 
 
 ```
@@ -63,46 +62,57 @@ districtsComplete <-
 ```{r county summaries}
 county_summaries <- districtsComplete |> 
   #grouped by county for county comparisons
-  dplyr::group_by(county) |> 
+  dplyr::group_by(county) |>
+  
+  dplyr::mutate(county = tolower(str_extract(county, "\\b\\w+\\b"))) |> 
   
   #creating above summary columns and removing na values
   dplyr::summarise(affordable_housing = sum(affordable_housing_district == "Yes", na.rm = TRUE),
                    multi_family_housing = sum(family_size %in% c(3, 4, 5) & 
                                                allowed %in% c("Allowed/Conditional", "Public Hearing"), na.rm = TRUE),
-                   eldery_housing = sum(elderly_housing_district == "Yes", na.rm = TRUE)
-                   ) |> 
+                   eldery_housing = sum(elderly_housing_district == "Yes", na.rm = TRUE),
+                   )|> 
   dplyr::arrange(county) 
   
 tibble(county_summaries)
 ```
 ## Implementing Urbnmapr to get Vermont Counties Data Frame
 ```{r}
-vermont_counties <- urbnmapr::states |> 
-  dplyr::filter(state_name == "Vermont")
-
+vermont_counties <- map_data("county") |> 
+  dplyr::filter(region == "vermont")
 ```
 
 ```{r}
-#Future plan is to merge vermont_counties with import county summary data, then display with ggplot.
+#merging counties map with vermont counties
+counties_map <- 
+  left_join(x = vermont_counties,
+            y = county_summaries,
+            by = c("subregion" = "county")) 
+
+
 ```
 
 
 
 ## Graphing the Map
 ```{r}
-ggplot(data = vermont_counties,
-       mapping = aes(x = long, y = lat, group = group)
-       ) +
-  geom_polygon(color = "black")+
+ggplot() +
+  geom_polygon(data = counties_map,
+               mapping = aes(x = long,
+                             y = lat,
+                             group = group, 
+                             fill = affordable_housing),
+               color = "black") +
   coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
-  theme_map()
+  theme_map() +
+  theme(legend.position = "right")
 ```
 
 
 
 ## Multi-family housing by county
 
-As of right now this only looks at family sizes of 3 and 4, need pivot longer x5 columns to make a x5 treatment.
+As of right now this only looks at family sizes of 3 and 4, need to make a x5 treatment column of some kind to include in the pivot longer function above.
 
 ```{r county comparisons}
 
