@@ -16,7 +16,7 @@ def main():
         next = input("Check for valid input \n Ready for geo proccesses?(t/f):").lower()
 
     if next == "t":
-        geoProcess(dirName, jurisdiction)
+        Topology(dirName, jurisdiction)
 
     
 #Zack's workflow to be turned into script:
@@ -44,7 +44,7 @@ def geoFileManagement(town, downloaded):
     print("Finished geoFileManagemet\n")
     #break
 
-def geoProcess(dirName, town):
+def Topology(dirName, town):
     #Part 2 : create mobile geodatabase and topology
     
     #create mobile geodatabase to avoid issues with locks
