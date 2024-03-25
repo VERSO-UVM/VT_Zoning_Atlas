@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.align = "center")
 
 # Install necessary packages
-pacman::p_load(tidyverse, janitor, lubridate, ggthemes, )
+pacman::p_load(tidyverse, janitor, lubridate, ggthemes)
 
 
 
@@ -26,7 +26,7 @@ This is R markdown script is....
 ## The Data
 
 ```{r jurisdictions}
-districts <- read.csv("../consolidated/district_zoning_data.csv") |> 
+districts <- read.csv("https://github.com/thebestyoshibird/VT_Zoning_Atlas/blob/main/ZoningAtlas/consolidated/district_zoning_data.csv?raw=true") |> 
   clean_names()
 ```
 
