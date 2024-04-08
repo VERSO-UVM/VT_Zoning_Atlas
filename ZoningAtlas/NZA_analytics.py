@@ -90,7 +90,7 @@ def viz_allvals(gdf,attr):
                         + str(percent_coverage(gdf_copy, attr, value))
                         + '% of land area.')
             counter += 1
-    plt.title(attr + ' Distribution in \nAddison and Chittenden Counties, VT')
+    plt.title(attr + ' Distribution in \nAll Analyzed Jurisdictions, VT')
     ax.set_axis_off()
     plt.tight_layout()
     plt.savefig('imgs/full_distr_'+attr.lower().strip(' ')+'.jpg')
@@ -113,7 +113,7 @@ def viz_binary_val(gdf,attr,targetval):
     plt.figtext(0.02, starty - 0.025, attr + ' not ' + targetval + ' in '
                 + str(round(100 - percent_coverage(gdf_copy, attr, targetval), 1))
                 + '% of land area.')
-    plt.title('Base districts where ' + attr + ' is ' + targetval + '\nAddison and Chittenden Counties, VT')
+    plt.title('Base districts where ' + attr + ' is ' + targetval + '\nAll Analyzed Jurisdictions, VT')
     ax.set_axis_off()
     plt.tight_layout()
     plt.savefig('imgs/binary_val_'+attr.lower().strip(' ')+'.jpg')
@@ -153,6 +153,13 @@ def lot_size(gdf, att, minlotsize, max_or_min):
         return round(100*sum(no_min_or_max_size['area'])/sum(gdf_copy['area']), 2)
     else:
         return round(100*sum(min_or_max_size['area'])/sum(gdf_copy['area']), 2)
+
+# Suppresses warning output to console for the purpose of screenshot-ing summary results
+import sys
+
+if not sys.warnoptions:
+    import warnings
+    warnings.simplefilter("ignore")
 
 ## MAIN CODE RETURNING ANALYTICS REQUESTED BY NATIONAL ZONING ATLAS
 
@@ -205,16 +212,27 @@ else:
     all_jxtn_footprints = gpd.read_file('consolidated/jxtn_footprints.geojson')
 
 # Creates tracking list of all districts complete to date for project management purposes
-all_district_geodata[['Jurisdiction', 'County', 'Full District Name']].to_csv('tracking_list.csv')
+# all_district_geodata[['Jurisdiction', 'County', 'Full District Name']].to_csv('tracking_list.csv')
 
 # Can be used to limit data to a single county or subset of counties
-# all_district_geodata = all_district_geodata.loc[all_district_geodata['County'] == 'Addison County']
+# all_district_geodata = all_district_geodata.loc[(all_district_geodata['County'] == 'Addison County') | (all_district_geodata['County'] == 'Chittenden County')]
 # all_jxtn_data = all_jxtn_data.loc[all_jxtn_data['County'] == 'Addison County']
 
-''' Jurisdiction characteristics '''
+# Audits for missing geospatial layers
 
-print('\nJURISDICTION CHARACTERISTICS')
+checklist_df = pd.DataFrame(columns = ['County', 'Jurisdiction', 'Full District Name', 'Abbreviated District Name', 'Overlay'])
 
+for index, district in all_district_zoning_data.iterrows():
+    this_jxtn = all_district_geodata.loc[all_district_geodata['Jurisdiction'].replace('(','').replace(')','') == district['Jurisdiction'].replace('(','').replace(')','')]
+    if district['Abbreviated District Name'] not in list(this_jxtn['Abbreviated District Name']):
+        checklist_df.loc[len(checklist_df)] = district[['County', 'Jurisdiction', 'Full District Name', 'Abbreviated District Name', 'Overlay']]
+checklist_df.to_csv('district_checklist.csv')
+print(checklist_df)
+
+# ''' Jurisdiction characteristics '''
+#
+# print('\nJURISDICTION CHARACTERISTICS')
+#
 # Total number of jurisdictions analyzed
 print('\nTotal number of jurisdictions analyzed')
 print('------------------------------------------')
@@ -251,7 +269,7 @@ cmap = (mpl.colors.ListedColormap(['lightgray', 'green']))
 all_jxtn_footprints.plot(column = 'Does It Have Zoning?', categorical=True, cmap=cmap, legend=True, legend_kwds={'labels': ['Unzoned', 'Zoned']})
 all_jxtn_area = sum(all_jxtn_footprints['area'])
 all_zoned_jxtns = sum(all_jxtn_footprints.loc[all_jxtn_footprints['Does It Have Zoning?'] == 'Yes']['area'])
-plt.title('Addison and Chittenden County Jurisdictions, VT')
+plt.title('All Analyzed Jurisdictions, VT')
 plt.figtext(0.02, 0.1, str(round(100*all_zoned_jxtns/all_jxtn_area, 1)) + '% of analyzed area is zoned.')
 plt.axis('off')
 plt.savefig('imgs/map_zoned_or_no.jpg')
@@ -300,6 +318,10 @@ viz_allvals(all_district_geodata, 'Type of Zoning District')
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Primarily Residential')
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Mixed with Residential')
 viz_binary_val(all_district_geodata, 'Type of Zoning District', 'Nonresidential')
+viz_binary_val(all_district_geodata, '1-Family Treatment', 'Allowed/Conditional')
+viz_binary_val(all_district_geodata, '4+-Family Treatment', 'Allowed/Conditional')
+viz_binary_val(all_district_geodata, '1-Family Treatment', 'Prohibited')
+viz_binary_val(all_district_geodata, '4+-Family Treatment', 'Prohibited')
 
 # Barplot of % area zoned with each due process requirement value for 1, 2, 3, and 4+ family treatments
 barplot_res_tx(all_district_geodata, ['Allowed/Conditional', 'Public Hearing'],
@@ -313,7 +335,7 @@ barplot_res_tx(all_district_geodata, 'Public Hearing',
 # % of land zoned for 1-family housing and no other type of housing
 one_fam_only = pd.DataFrame(columns = all_district_geodata.columns)
 for index, row in all_district_zoning_data.iterrows():
-    if row['1-Family Treatment'] == 'Allowed/Conditional'or row['1-Family Treatment'] == 'Public Hearing':
+    if row['1-Family Treatment'] == 'Allowed/Conditional' or row['1-Family Treatment'] == 'Public Hearing':
         if row['2-Family Treatment'] == 'Prohibited' and row['3-Family Treatment'] == 'Prohibited' \
                 and row['4+-Family Treatment'] == 'Prohibited':
             one_fam_only.loc[len(one_fam_only)] = row
@@ -345,14 +367,14 @@ greaterthan184 = lot_size(all_district_geodata, '1-Family Min. Lot', 1.84, 'min'
 
 names = ['No minimum ('+ str(round(nominlotsize, 2)) + '%)', '0-0.46 acres (' + str(round(lessthan46, 2))+'%)',
          '0.47-0.92 acres (' +str(round(anyminlotsize - greaterthan92 - lessthan46, 2)) +'%)',
-         '0.92-1.84 acres ('+str(round(greaterthan92-greaterthan184, 2))+'%',
+         '0.92-1.84 acres ('+str(round(greaterthan92-greaterthan184, 2))+'%)',
          '>1.85 acres (' +str(round(greaterthan184, 2))+'%)']
 plt.pie([nominlotsize, lessthan46, anyminlotsize - greaterthan92 - lessthan46,
          greaterthan92-greaterthan184, greaterthan184], labels=names,
         wedgeprops = { 'linewidth' : 7, 'edgecolor' : 'white' })
 my_circle=plt.Circle( (0,0), 0.7, color='white')
 p=plt.gcf()
-plt.title('Minimum lot size requirements\nAll analyzed VT jurisdictions')
+plt.title('Minimum lot size requirements\nAll Analyzed Districts, VT')
 p.gca().add_artist(my_circle)
 plt.savefig('imgs/min_lot_size_donut.jpg')
 plt.clf()
