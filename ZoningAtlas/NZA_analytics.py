@@ -33,7 +33,6 @@ def consolidate_data(folder, gis_or_zoning): # gis_or_zoning is a string variabl
                 else:
                     all_VT_zoning = pd.concat([this_jxtn, all_VT_zoning])
             filename.close()
-        print(str(gjson), gis_or_zoning, 'consolidated.')
     all_VT_zoning=all_VT_zoning.reset_index(drop = True)
     return all_VT_zoning
 
@@ -99,6 +98,7 @@ def viz_allvals(gdf,attr):
 def viz_binary_val(gdf,attr,targetval):
     gdf_copy = gdf.copy()
     fig, ax = plt.subplots()
+    plt.rcParams['figure.dpi'] = 300
     cmap = (mpl.colors.ListedColormap(['purple', 'lightgray']))
     for val in gdf_copy[attr].unique():
         if val != targetval:
@@ -109,11 +109,11 @@ def viz_binary_val(gdf,attr,targetval):
     starty = 0.1
     plt.figtext(0.02, 0.1, attr + ' '+ targetval + ' in '
                 + str(percent_coverage(gdf_copy, attr, targetval))
-                + '% of land area.')
+                + '% of land area.', fontsize = 20)
     plt.figtext(0.02, starty - 0.025, attr + ' not ' + targetval + ' in '
                 + str(round(100 - percent_coverage(gdf_copy, attr, targetval), 1))
-                + '% of land area.')
-    plt.title('Base districts where ' + attr + ' is ' + targetval + '\nAll Analyzed Jurisdictions, VT')
+                + '% of land area.', fontsize = 20)
+    plt.title('Base districts where ' + attr + ' is ' + targetval + '\nAll Analyzed Jurisdictions, VT', fontsize = 20)
     ax.set_axis_off()
     plt.tight_layout()
     plt.savefig('imgs/binary_val_'+attr.lower().strip(' ')+'.jpg')
@@ -227,12 +227,12 @@ for index, district in all_district_zoning_data.iterrows():
     if district['Abbreviated District Name'] not in list(this_jxtn['Abbreviated District Name']):
         checklist_df.loc[len(checklist_df)] = district[['County', 'Jurisdiction', 'Full District Name', 'Abbreviated District Name', 'Overlay']]
 checklist_df.to_csv('district_checklist.csv')
-print(checklist_df)
+# print(checklist_df)
 
-# ''' Jurisdiction characteristics '''
-#
-# print('\nJURISDICTION CHARACTERISTICS')
-#
+''' Jurisdiction characteristics '''
+
+print('\nJURISDICTION CHARACTERISTICS')
+
 # Total number of jurisdictions analyzed
 print('\nTotal number of jurisdictions analyzed')
 print('------------------------------------------')
@@ -309,8 +309,62 @@ for jxtn in all_district_geodata['Jurisdiction'].unique():
     thisjxtn_wo_overlays = get_total_area(thisjxtn)
     print(jxtn.ljust(25), '\t', str(round(sum(all_district_geodata.loc[all_district_geodata['Jurisdiction'] == jxtn]['area']), 1)).ljust(20), thisjxtn_wo_overlays)
 
-''' Zoning characteristics '''
+''' Value estimation '''
+vtza_value = 0
+jxtn_costs = {}
 
+for index, jxtn in all_jxtn_footprints.iterrows():
+    thisjxtn = jxtn['Jurisdiction']
+    if jxtn['Does It Have Zoning?'] == 'Yes':
+        numpages = int(jxtn['# of Pages in the Zoning Code'])
+        thisjxtndistricts = all_district_geodata.loc[all_district_geodata['Jurisdiction'] == thisjxtn]
+        numdistricts = len(thisjxtndistricts)
+        try:
+            overlay_dis = thisjxtndistricts['Overlay'].value_counts()['Yes']
+        except:
+            overlay_dis = 0
+        if numdistricts > 0 and numdistricts < 10:
+            if numpages < 100:
+                vtza_value += 2000
+            elif numpages in range(100, 200):
+                vtza_value += 3000
+            elif numpages in range(200, 300):
+                vtza_value += 3750
+            elif numpages >= 300:
+                vtza_value += 5250
+        elif numdistricts in range (10, 20):
+            if numpages < 100:
+                vtza_value += 3000
+            elif numpages in range(100, 200):
+                vtza_value += 3750
+            elif numpages in range(200, 300):
+                vtza_value += 5250
+            elif numpages >= 300:
+                vtza_value += 7000
+        elif numdistricts in range (20, 30):
+            if numpages < 100:
+                vtza_value += 3750
+            elif numpages in range(100, 200):
+                vtza_value += 5250
+            elif numpages in range(200, 300):
+                vtza_value += 7500
+            elif numpages >= 300:
+                vtza_value += 10000
+        elif numdistricts >= 30:
+            if numpages < 100:
+                vtza_value += 5250
+            elif numpages in range(100, 200):
+                vtza_value += 7500
+            elif numpages in range(200, 300):
+                vtza_value += 10000
+            elif numpages >= 300:
+                vtza_value += 12500
+        vtza_value += 250 * overlay_dis
+
+print('Estimated minimum value of work completed to date: $', vtza_value)
+
+''' Zoning characteristics '''
+#
 print('\nZONING CHARACTERISTICS')
 
 # Map type of district
@@ -342,7 +396,7 @@ for index, row in all_district_zoning_data.iterrows():
 print(str(round(100*sum(one_fam_only['area'])/sum(all_district_geodata['area']), 2)), '% of analyzed land zoned solely '
                                                                                       'for 1-family housing')
 
-''' Lot Characteristics '''
+# ''' Lot Characteristics '''
 
 print('\nLOT CHARACTERISTICS')
 print(str(lot_size(all_district_geodata, '1-Family Min. Lot', 0.46, 'min')), '% of land zoned for 1-Family Treatment '
@@ -365,29 +419,32 @@ lessthan46 = anyminlotsize-greaterthan46
 greaterthan92 = lot_size(all_district_geodata, '1-Family Min. Lot', 0.92, 'min')
 greaterthan184 = lot_size(all_district_geodata, '1-Family Min. Lot', 1.84, 'min')
 
-names = ['No minimum ('+ str(round(nominlotsize, 2)) + '%)', '0-0.46 acres (' + str(round(lessthan46, 2))+'%)',
+names = ['No minimum\n ('+ str(round(nominlotsize, 2)) + '%)', '0-0.46 acres (' + str(round(lessthan46, 2))+'%)',
          '0.47-0.92 acres (' +str(round(anyminlotsize - greaterthan92 - lessthan46, 2)) +'%)',
-         '0.92-1.84 acres ('+str(round(greaterthan92-greaterthan184, 2))+'%)',
+         '0.92-1.84 acres\n ('+str(round(greaterthan92-greaterthan184, 2))+'%)',
          '>1.85 acres (' +str(round(greaterthan184, 2))+'%)']
 plt.pie([nominlotsize, lessthan46, anyminlotsize - greaterthan92 - lessthan46,
          greaterthan92-greaterthan184, greaterthan184], labels=names,
-        wedgeprops = { 'linewidth' : 7, 'edgecolor' : 'white' })
-my_circle=plt.Circle( (0,0), 0.7, color='white')
-p=plt.gcf()
-plt.title('Minimum lot size requirements\nAll Analyzed Districts, VT')
+        wedgeprops = { 'linewidth' : 7, 'edgecolor' : 'white' }, textprops={'fontsize': 20})
+my_circle=plt.Circle((0,0), 0.7, color='white')
+plt.rcParams["figure.figsize"] = [10, 10]
+plt.rcParams['figure.dpi'] = 300
+p = plt.gcf()
+plt.tight_layout()
+plt.title('Minimum lot size requirements\nAll analyzed districts, VT', x = 0.5, y = 0.97, fontsize = 30)
 p.gca().add_artist(my_circle)
 plt.savefig('imgs/min_lot_size_donut.jpg')
 plt.clf()
+#
+# # Barplot of minimum lot sizes for 1-Family Housing
 
-# Barplot of minimum lot sizes for 1-Family Housing
-
-# Option 1: Stacked barplot
-for i in range(5):
-    plt.bar(range(1), min_lot_size_reqs[i][1], label = min_lot_size_reqs[i][0])
-plt.legend(bbox_to_anchor = (1, 0.5))
-plt.tick_params(labelbottom = False, bottom = False)
-plt.savefig('imgs/barplot_minlotsize_stacked.jpg')
-plt.clf()
+# # Option 1: Stacked barplot
+# for i in range(5):
+#     plt.bar(range(1), min_lot_size_reqs[i][1], label = min_lot_size_reqs[i][0])
+# plt.legend(bbox_to_anchor = (1, 0.5))
+# plt.tick_params(labelbottom = False, bottom = False)
+# plt.savefig('imgs/barplot_minlotsize_stacked.jpg')
+# plt.clf()
 
 # Option 2: Traditional barplot
 plt.bar(range(5), [x[1] for x in min_lot_size_reqs], color=['green', 'dimgray', 'dimgray', 'dimgray', 'dimgray'])
@@ -403,4 +460,4 @@ viz_allvals(all_district_geodata, '3-Family Treatment')
 viz_allvals(all_district_geodata, '4+-Family Treatment')
 viz_allvals(all_district_geodata, 'Accessory Dwelling Unit (ADU) Treatment')
 viz_allvals(all_district_geodata, 'Planned Residential Development (PRD) Treatment')
-
+#

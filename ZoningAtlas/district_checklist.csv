@@ -64,24 +64,36 @@
 62,Lamoille County,Morristown,Flood Hazard Area,FHA,Yes
 63,Lamoille County,Morristown,Source Protection Area,SPA,Yes
 64,Bennington County,Old Bennington,Rural Residential District,RRD,No
-65,Chittenden County,Milton,Flood Hazard Overlay District,FHO,Yes
-66,Bennington County,Stamford,Special Flood Hazard Area Overlay,FLD,Yes
-67,Bennington County,Stamford,River Corridor Overlay,RIV,Yes
-68,Chittenden County,Burlington,Centennial Woods Overlay,CWO,Yes
-69,Chittenden County,Burlington,Design Review Overlay,DR,Yes
-70,Chittenden County,Burlington,Champlain College,ICC-CC,Yes
-71,Chittenden County,Burlington,UVM Central Campus,ICC-UVM,Yes
-72,Chittenden County,Burlington,UVM Medical Center Campus,ICC-UVMMC,Yes
-73,Chittenden County,Burlington,UVM South of Main Street Campus,ICC-UVMS,Yes
-74,Chittenden County,Burlington,UVM Trinity Campus,ICC-UVMT,Yes
-75,Chittenden County,Burlington,Mouth of the River Overlay,MOR,Yes
-76,Chittenden County,Burlington,Natural Areas Zone,NR-NAZ,Yes
-77,Chittenden County,Burlington,Riparian and Littoral Conservation Zone,NR-RLCZ,Yes
-78,Chittenden County,Burlington,Special Flood Hazard Area,NR-SFZA,Yes
-79,Chittenden County,Burlington,Wetland Protection Zone,NR-WPZ,Yes
-80,Chittenden County,Burlington,RH Density Bonus Overlay,RHDB,Yes
-81,Chittenden County,Burlington,RLLarger Lot Overlay,RLLL,Yes
-82,Chittenden County,Burlington,South End Innovation District,SEID,Yes
-83,Chittenden County,Essex Junction,North Lincoln Street Overlay District,NLSO,Yes
-84,Chittenden County,Essex Junction,Professional Office Overlay District,POO,Yes
-85,Addison County,Bristol,Flood Hazard Overlay District,FHA,Yes
+65,Rutland County,Fair Haven,Industrial 2,Industrial 2,
+66,Chittenden County,Milton,Flood Hazard Overlay District,FHO,Yes
+67,Bennington County,Stamford,Special Flood Hazard Area Overlay,FLD,Yes
+68,Bennington County,Stamford,River Corridor Overlay,RIV,Yes
+69,Chittenden County,Burlington,Centennial Woods Overlay,CWO,Yes
+70,Chittenden County,Burlington,Design Review Overlay,DR,Yes
+71,Chittenden County,Burlington,Champlain College,ICC-CC,Yes
+72,Chittenden County,Burlington,UVM Central Campus,ICC-UVM,Yes
+73,Chittenden County,Burlington,UVM Medical Center Campus,ICC-UVMMC,Yes
+74,Chittenden County,Burlington,UVM South of Main Street Campus,ICC-UVMS,Yes
+75,Chittenden County,Burlington,UVM Trinity Campus,ICC-UVMT,Yes
+76,Chittenden County,Burlington,Mouth of the River Overlay,MOR,Yes
+77,Chittenden County,Burlington,Natural Areas Zone,NR-NAZ,Yes
+78,Chittenden County,Burlington,Riparian and Littoral Conservation Zone,NR-RLCZ,Yes
+79,Chittenden County,Burlington,Special Flood Hazard Area,NR-SFZA,Yes
+80,Chittenden County,Burlington,Wetland Protection Zone,NR-WPZ,Yes
+81,Chittenden County,Burlington,RH Density Bonus Overlay,RHDB,Yes
+82,Chittenden County,Burlington,RLLarger Lot Overlay,RLLL,Yes
+83,Chittenden County,Burlington,South End Innovation District,SEID,Yes
+84,Chittenden County,Essex Junction,North Lincoln Street Overlay District,NLSO,Yes
+85,Chittenden County,Essex Junction,Professional Office Overlay District,POO,Yes
+86,Addison County,Bristol,Flood Hazard Overlay District,FHA,Yes
+87,Rutland County,Shrewsbury,Historic D - Brown Covered Bridge,Brown Covered Bridge,No
+88,Rutland County,Shrewsbury,Historic Village B - Cuttingsville,Cuttingsville,No
+89,Rutland County,Shrewsbury,Flood Hazard Area Overlay,Flood Hazard Area Overlay,Yes
+90,Rutland County,Shrewsbury,High Elevation Residential District,High Elevation Residential,No
+91,Rutland County,Shrewsbury,Limited Residential,Limited Residential,No
+92,Rutland County,Shrewsbury,Historic Village C - Northam,Northam,No
+93,Rutland County,Shrewsbury,North Shrewsbury Village Residential,North Shrewsbury Village Residential,No
+94,Rutland County,Shrewsbury,Preservation District,Preservation,No
+95,Rutland County,Shrewsbury,Rural Residential,Rural Residential,No
+96,Rutland County,Shrewsbury,Historic Village A - Shrewsbury Center,Shrewsbury Center,No
+97,Rutland County,Shrewsbury,Special Features Overlay,Special Features Overlay,Yes
