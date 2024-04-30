@@ -9,11 +9,14 @@ In the News:
 ## Progress
 Counties Completed
 * Chittenden
-* Addison 
+* Addison
+* Franklin
+* Grand Isle
 
 Counties in Progress 
 * Rutland
 * Bennington
+* Lamoille
 
 ## Join the Effort
 This effort is a collection of volunteers which includes volunteers, interns, and students getting course credit. Please reach out in Discussions to see if you can join the effort
