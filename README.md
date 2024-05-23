@@ -1,3 +1,5 @@
+[![license-MIT](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](https://github.com/VERSO-UVM/VT_Zoning_Atlas/blob/main/LICENSE)
+
 # Vermont Zoning Atlas
 
 The [Vermont Zoning Atlas](https://www.zoningatlas.org/vermont) is a web-based geospatial interface that visualizes zoning code distributions across all of Vermont. Zoning rules can present barriers to effective city planning, impairing our ability to achieve important policy objectives like community desegregation, climate change resiliency, transportation access, homelessness relief, and affordable housing development. The Vermont Zoning Atlas seeks to democratize researchers', policymakers', advocates', and everyday citizens' understanding of zoning regulations and enable apples-to-apples cross-jurisdiction comparisons through a methodology developed by our partner, the [National Zoning Atlas](https://www.zoningatlas.org/).
@@ -12,14 +14,26 @@ Counties Completed
 * Addison
 * Franklin
 * Grand Isle
+* Rutland
 
 Counties in Progress 
-* Rutland
 * Bennington
 * Lamoille
+* Washington
+* Windham
+* Orange
+
+## Data
+Data uploaded to the National Zoning Atlas can be found in the "ZoningAtlas" folder as follows:
+* .csv files with zoning regulations broken by district
+  - (https://github.com/VERSO-UVM/VT_Zoning_Atlas/tree/main/ZoningAtlas/districts)
+* Jurisdiction footprints (TIGER files)
+  - (https://github.com/VERSO-UVM/VT_Zoning_Atlas/tree/main/ZoningAtlas/jxtn_footprints)
+* Completed zoning district geoJSONs
+  - (https://github.com/VERSO-UVM/VT_Zoning_Atlas/tree/main/ZoningAtlas/districts_gis) 
 
 ## Join the Effort
-This effort is a collection of volunteers which includes volunteers, interns, and students getting course credit. Please reach out in Discussions to see if you can join the effort
+This effort is a collection of teams which includes volunteers, interns, and students getting course credit. Please reach out in Discussions to see if you can join the effort!
 
 ## Partnerships
 The project is in collaboration with the following
@@ -37,7 +51,7 @@ The project is in collaboration with the following
 
 ## Roles and Tasks
 
-The Zoning Code Analyst team of volunteers:
+The Zoning Code Analyst team:
 * Reviews and compares zoning by-laws and land use rules for each jurisdiction (town, village, city, or gore) in Vermont
 * Catalogues the attributes of each district’s rules according to the National Zoning Atlas methodology:
 * Dimensional standards (e.g., minimum lot size, maximum building height)
@@ -47,7 +61,7 @@ The Zoning Code Analyst team of volunteers:
 * Enters data into the National Zoning Atlas Editor workspace for review and joining with GIS file
 * Reports up any complications, problems, or questions to the Project Director for technical assistance
 
-The GIS Specialist team of volunteers:
+The GIS Specialist team:
 * Accesses open-source zoning district geoJSONs
 * Performs topology checks to find and correct invalid geometries and boundary issues (e.g., overlapping base districts, polygons drawn outside jurisdictional boundaries, gaps/slivers between base districts)
 * Merges non-continuous district polygons into multi-polygons
