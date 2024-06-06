@@ -1,4 +1,5 @@
-[![license-MIT](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](https://github.com/VERSO-UVM/VT_Zoning_Atlas/blob/main/LICENSE)
+[![license-MIT](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](https://github.com/VERSO-UVM/VT_Zoning_Atlas/blob/main/LICENSE) [![DOI](https://zenodo.org/badge/688699704.svg)](https://zenodo.org/doi/10.5281/zenodo.11508693)
+
 
 # Vermont Zoning Atlas
 
