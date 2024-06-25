@@ -1,0 +1,111 @@
+,County,Jurisdiction,Full District Name,Abbreviated District Name,Overlay
+0,Rutland County,Castleton,Flood Hazard Area Overlay,FHO,Yes
+1,Rutland County,Castleton,River Corridor Overlay,RCO,Yes
+2,Rutland County,Castleton,Water Source Protection Area,WSPA,Yes
+3,Addison County,Leicester,Flood Hazard Overlay,FH,Yes
+4,Rutland County,Rutland (City),Campus Development,CDD,No
+5,Chittenden County,Williston,Mixed Use Residential Zoning District,MURZD,Yes
+6,Addison County,Shoreham,Village Commercial Design Overlay District,VCDOD,Yes
+7,Addison County,Shoreham,Village Park District,VPD,Yes
+8,Addison County,Waltham,High Density Residential District,HDR,No
+9,Addison County,Waltham,Habitat Overlay District,HOA,Yes
+10,Addison County,Whiting,Flood Hazard Area,FHO,Yes
+11,Franklin County,Fairfield,Chester A Arthur Overlay,CAA,Yes
+12,Franklin County,Fairfield,Flood Hazard Area Overlay,FHA,Yes
+13,Bennington County,Bennington,Agricultural District,A,No
+14,Bennington County,Bennington,Airport Approach Overlay District,AAO,Yes
+15,Bennington County,Bennington,Route 7A Corridor Overlay District,CO,Yes
+16,Bennington County,Bennington,Downtown District,D,No
+17,Bennington County,Bennington,Downtown Form-Based-Design Area,DD,Yes
+18,Bennington County,Bennington,Forest District,F,No
+19,Bennington County,Bennington,Fluvial Erosion Hazard Area Overlay District,FEH,Yes
+20,Bennington County,Bennington,Flood Hazard Overlay District,FHO,Yes
+21,Bennington County,Bennington,Historic Bennington Design Review District,HDR,Yes
+22,Bennington County,Bennington,Industrial District,I,No
+23,Bennington County,Bennington,Institutional & Professional District,IP,No
+24,Bennington County,Bennington,Mixed Use Form-Based-Design Area,MD,Yes
+25,Bennington County,Bennington,Mixed Residential District #1,MR-1,No
+26,Bennington County,Bennington,Mixed Residential District #2,MR-2,No
+27,Bennington County,Bennington,Mixed Use District #1,MU-1,No
+28,Bennington County,Bennington,Mixed Use District #2,MU-2,No
+29,Bennington County,Bennington,Planned Airport District,PA,No
+30,Bennington County,Bennington,Planned Commercial District,PC,No
+31,Bennington County,Bennington,Public Open Space District,POS,No
+32,Bennington County,Bennington,Rural Conservation District,RCON,No
+33,Bennington County,Bennington,Residential Form-Based-Design Area,RD,Yes
+34,Bennington County,Bennington,Rural Residential District,RR,No
+35,Bennington County,Bennington,Village Residential District,VR,No
+36,Bennington County,Sandgate,Forest #1,F1,No
+37,Bennington County,Sandgate,Forest #1,F2,No
+38,Bennington County,Sandgate,Rural Residence,RR,No
+39,Lamoille County,Elmore,Developed Shoreline,DSHR,No
+40,Lamoille County,Elmore,Flood Hazard,FLD,Yes
+41,Lamoille County,Elmore,Forest Reserve,FR,No
+42,Lamoille County,Elmore,Remote Area,RAO,Yes
+43,Lamoille County,Elmore,Rural East,RE,No
+44,Lamoille County,Elmore,Rural West,RW,No
+45,Lamoille County,Elmore,Undeveloped Shoreline,USHR,No
+46,Lamoille County,Elmore,Village,VLG,No
+47,Chittenden County,South Burlington,Transect Zone 1,T-1,No
+48,Chittenden County,Saint George,Business Park Overlay District,BPO,Yes
+49,Chittenden County,Saint George,Flood Hazard and River Corridor Overlay District,FHRCO,Yes
+50,Franklin County,Bakersfield,Aquifer Overlay,AO,Yes
+51,Franklin County,Bakersfield,Conservation,CON,No
+52,Franklin County,Bakersfield,Flood Hazard Overlay,FHO,Yes
+53,Franklin County,Bakersfield,High Density Residential,HDR,No
+54,Franklin County,Bakersfield,Rural,RL,No
+55,Franklin County,Bakersfield,Village Center,VC,No
+56,Addison County,Vergennes,Flood Hazard Overlay District,FHO,Yes
+57,Rutland County,Benson,Agricultural and Rural Residential,ARR,No
+58,Rutland County,Benson,Floodplain Overlay,FO,Yes
+59,Rutland County,Benson,Lake Champlain Shoreline,LCS,No
+60,Rutland County,Benson,Lake Shore,LS,No
+61,Rutland County,Benson,Village,V,No
+62,Lamoille County,Stowe (Town),Fluvial Erosion Hazard,FEH,Yes
+63,Lamoille County,Stowe (Town),Flood Hazard,FH,Yes
+64,Lamoille County,Stowe (Town),Forest Reserve,FR,No
+65,Lamoille County,Stowe (Town),Highway Tourist,HT,No
+66,Lamoille County,Stowe (Town),Lower Village Commercial,LVC,No
+67,Lamoille County,Stowe (Town),Moscow Commercial,MC,No
+68,Lamoille County,Stowe (Town),Meadowland Overlay,MOD,Yes
+69,Lamoille County,Stowe (Town),Mountain Road Crossroads,MRC,No
+70,Lamoille County,Stowe (Town),Mountain Road Village,MRV,No
+71,Lamoille County,Stowe (Town),Ridgeline and Hillside Overlay,RHOD,Yes
+72,Lamoille County,Stowe (Town),Agricultural and Rural Residential 1,RR1,No
+73,Lamoille County,Stowe (Town),Agricultural and Rural Residential 2,RR2,No
+74,Lamoille County,Stowe (Town),Agricultural and Rural Residential 3,RR3,No
+75,Lamoille County,Stowe (Town),Agricultural and Rural Residential 5,RR5,No
+76,Lamoille County,Stowe (Town),Stowe Historic Overlay,SH,Yes
+77,Lamoille County,Stowe (Town),Source Protection Overlay,SPO,Yes
+78,Lamoille County,Stowe (Town),Upper Mountain Road,UMR,No
+79,Lamoille County,Stowe (Town),Village Commercial 10,VC 10,No
+80,Lamoille County,Stowe (Town),Village Commercial 30,VC 30,No
+81,Lamoille County,Stowe (Town),Village Residential 20,VR 20,No
+82,Lamoille County,Stowe (Town),Village Residential 40,VR 40,No
+83,Lamoille County,Stowe (Town),West Branch Community Service,WBCS,No
+84,Lamoille County,Morristown,Environmental Resource Area,ERA,Yes
+85,Lamoille County,Morristown,Flood Hazard Area,FHA,Yes
+86,Lamoille County,Morristown,Source Protection Area,SPA,Yes
+87,Bennington County,Old Bennington,Rural Residential District,RRD,No
+88,Rutland County,Fair Haven,Industrial 2,Industrial 2,No
+89,Chittenden County,Milton,Flood Hazard Overlay District,FHO,Yes
+90,Bennington County,Stamford,Special Flood Hazard Area Overlay,FLD,Yes
+91,Bennington County,Stamford,River Corridor Overlay,RIV,Yes
+92,Chittenden County,Burlington,Centennial Woods Overlay,CWO,Yes
+93,Chittenden County,Burlington,Design Review Overlay,DR,Yes
+94,Chittenden County,Burlington,Champlain College,ICC-CC,Yes
+95,Chittenden County,Burlington,UVM Central Campus,ICC-UVM,Yes
+96,Chittenden County,Burlington,UVM Medical Center Campus,ICC-UVMMC,Yes
+97,Chittenden County,Burlington,UVM South of Main Street Campus,ICC-UVMS,Yes
+98,Chittenden County,Burlington,UVM Trinity Campus,ICC-UVMT,Yes
+99,Chittenden County,Burlington,Mouth of the River Overlay,MOR,Yes
+100,Chittenden County,Burlington,Natural Areas Zone,NR-NAZ,Yes
+101,Chittenden County,Burlington,Riparian and Littoral Conservation Zone,NR-RLCZ,Yes
+102,Chittenden County,Burlington,Special Flood Hazard Area,NR-SFZA,Yes
+103,Chittenden County,Burlington,Wetland Protection Zone,NR-WPZ,Yes
+104,Chittenden County,Burlington,RH Density Bonus Overlay,RHDB,Yes
+105,Chittenden County,Burlington,RLLarger Lot Overlay,RLLL,Yes
+106,Chittenden County,Burlington,South End Innovation District,SEID,Yes
+107,Chittenden County,Essex Junction,North Lincoln Street Overlay District,NLSO,Yes
+108,Chittenden County,Essex Junction,Professional Office Overlay District,POO,Yes
+109,Addison County,Bristol,Flood Hazard Overlay District,FHA,Yes
