@@ -1,4 +1,9 @@
+# R projects
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# Other artifacts
+.DS_Store
+**/.DS_Store
