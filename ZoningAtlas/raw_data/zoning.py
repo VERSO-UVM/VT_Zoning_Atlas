@@ -35,16 +35,17 @@ column_mapper ={'County' : 'COUNTY',
                 'Full District Name' : 'DIST_NAME',
                 'Mapped But Extinct?' : 'EXT_DIST',
                 'Overlay District?' : 'OVER',
+                'District Mapped' : 'DIST_MAP',
                 'Type of Residential District?' : 'DIST_TYPE',
                 'Affordable Housing District?' : 'AFF_DIST',
                 'Elderly Housing District?' : 'ELD_DIST',
+                'Notes - Write any explanations here.': 'NOTES',
                 '1-Family Allowed?' : '1FDP',
                 '2-Family Allowed?' : '2FDP',
                 '3-Family Allowed?' : '3FDP',
                 '4+-Family Allowed?' : '4FDP',
                 '5+-Family Allowed?' : '5FDP',
                 '1F Minimum Lot Size (acres)' : '1F_MIN_LOT',
-                '1F Minimum Lot Size (acres)' : '1F_MIN_LOT_UNITS',
                 '1F Front Setback (ft)' : '1F_FSET',
                  # '1F_FSET_UNITS',
                 '1F Side Setback (ft)': '1F_SSET',
@@ -475,13 +476,13 @@ def disambiguate_treatments(df):
             df.at[index, 0] = '4F ' + df.loc[index, 0]
         if index > 88 and index <= 109:
             df.at[index, 0] = '5F ' + df.loc[index, 0]
-        if index > 109 and index <= 119:
+        if index > 109 and index <= 114:
             df.at[index, 0] = 'AFF ' + df.loc[index, 0]
-        if index > 119 and index <= 130:
+        if index > 114 and index <= 124:
             df.at[index, 0] = 'ADU ' + df.loc[index, 0]
-        if index > 130 and index <= 135:
+        if index > 124 and index <= 128:
             df.at[index, 0] = 'PRD ' + df.loc[index, 0]
-        if index > 135 and index <= 140:
+        if index > 128 and index < len(df.columns):
             df.at[index, 0] = 'PUD ' + df.loc[index, 0]
     return(df)
 
@@ -490,17 +491,18 @@ def disambiguate_treatments(df):
 
 
 # Read the "Districts" worksheet into a DataFrame
-input_dir = 'zoning_needs_to_join_csv'
+input_dir = 'districts_needs_to_join_csv'
 gis_dir = 'gis_needs_to_join'
 
 for file_name in os.listdir(input_dir):
-    if file_name != '.DS_Store':
+    if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
         print(file_name)
-        county_jxtn = file_name.split('_')
+        county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
 
-        df = pd.read_excel(os.path.join(input_dir, file_name),
+        df = pd.read_csv(os.path.join(input_dir, file_name),
                            skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
                            header=None)
+
         df_copy = df.copy()
 
         # Disambiguate treatments
@@ -516,7 +518,7 @@ for file_name in os.listdir(input_dir):
         df_copy.rename(column_mapper, axis = 'columns', inplace=True)
 
         df_final = units_assignment(df_copy)
-        df_final.to_csv('zoning_cleaned/test.csv')
+        df_final.to_csv('zoning_cleaned/' + county_jxtn + '.csv')
 
     # # Find and join matching geoJSONs for jurisdiction
     # gis_filename = os.path.join(gis_dir, county_jxtn[0] + '_' + county_jxtn[1] + '.geojson')
