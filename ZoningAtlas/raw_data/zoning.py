@@ -244,13 +244,14 @@ column_mapper ={'County' : 'COUNTY',
 
 
 # Function to standardize editor column names
-def standardize_editor_column_names(columns):
-    column_mapper = {'Status':'STAT',
+editor_column_mapper = {'Status':'STAT',
                  'Last Updated': 'LAST_UPDATE',
                  'Jurisdiction Status': 'JXTN_STAT',
                  'State': 'STATE',
                  'County': 'COUNTY',
                  'Jurisdiction': 'JXTN',
+                 'District Mapped': 'DIST_MAP',
+                 'Juridiction Last Updated': 'JXTN_UPDATE',
                  'Parent Jurisdiction': 'PARENT_JXTN',
                  'Abbreviated District Name': 'ABB_DIST_NAME',
                  'Full District Name': 'DIST_NAME',
@@ -455,10 +456,7 @@ def standardize_editor_column_names(columns):
                  'PUD Threshold #': 'PUD_THRESH',
                  'PUD allowed': 'PUD_ALLOW',
                  'PUD requiring land conservation': 'PUD_CONSERVE',
-                 'Unique GIS schema identifier': 'GIS_ID'
-}
-    return [column_mapper.get(col, col) for col in columns]
-
+                 'Unique GIS schema identifier': 'GIS_ID'}
 
 # In[9]:
 
@@ -491,34 +489,42 @@ def disambiguate_treatments(df):
 
 
 # Read the "Districts" worksheet into a DataFrame
-input_dir = 'districts_needs_to_join_csv'
-gis_dir = 'gis_needs_to_join'
+# input_dir = 'districts_needs_to_join_csv'
+# gis_dir = 'gis_needs_to_join'
+#
+# for file_name in os.listdir(input_dir):
+#     if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
+#         print(file_name)
+#         county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
+#
+#         df = pd.read_csv(os.path.join(input_dir, file_name),
+#                            skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
+#                            header=None)
+#
+#         df_copy = df.copy()
+#
+#         # Disambiguate treatments
+#         df_copy = disambiguate_treatments(df_copy)
+#
+#         # Transpose the DataFrame
+#         df_copy = df_copy.transpose()
+#         df_copy.rename(column_mapper, axis = 'columns', inplace=True)
+#
+#         df_final = units_assignment(df_copy)
+#         df_final.to_csv('zoning_cleaned/' + county_jxtn + '.csv')
 
-for file_name in os.listdir(input_dir):
-    if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
-        print(file_name)
-        county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
+editor_dir = 'Editor_formatted/district_attributes_csv/'
 
-        df = pd.read_csv(os.path.join(input_dir, file_name),
-                           skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
-                           header=None)
+for file_name in os.listdir(editor_dir):
+    print(file_name)
+    county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
 
-        df_copy = df.copy()
+    # Standardize column names
+    df = pd.read_csv(editor_dir + file_name, sep = ',', low_memory=False, header=0)
+    df.rename(editor_column_mapper, axis = 'columns', inplace=True)
+    df.set_index('ABB_DIST_NAME', inplace=True)
 
-        # Disambiguate treatments
-        df_copy = disambiguate_treatments(df_copy)
-
-        # Transpose the DataFrame
-        df_copy = df_copy.transpose()
-
-        # Standardize column names
-        df_copy.columns = standardize_editor_column_names(df_copy.iloc[0])
-        df_copy = df_copy.drop(df_copy.index[0])
-
-        df_copy.rename(column_mapper, axis = 'columns', inplace=True)
-
-        df_final = units_assignment(df_copy)
-        df_final.to_csv('zoning_cleaned/' + county_jxtn + '.csv')
+    df.to_csv('Editor_cleaned/district_attributes_csv/' + county_jxtn + '.csv')
 
     # # Find and join matching geoJSONs for jurisdiction
     # gis_filename = os.path.join(gis_dir, county_jxtn[0] + '_' + county_jxtn[1] + '.geojson')
