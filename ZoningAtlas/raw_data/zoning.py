@@ -489,42 +489,44 @@ def disambiguate_treatments(df):
 
 
 # Read the "Districts" worksheet into a DataFrame
-# input_dir = 'districts_needs_to_join_csv'
-# gis_dir = 'gis_needs_to_join'
-#
-# for file_name in os.listdir(input_dir):
-#     if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
-#         print(file_name)
-#         county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
-#
-#         df = pd.read_csv(os.path.join(input_dir, file_name),
-#                            skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
-#                            header=None)
-#
-#         df_copy = df.copy()
-#
-#         # Disambiguate treatments
-#         df_copy = disambiguate_treatments(df_copy)
-#
-#         # Transpose the DataFrame
-#         df_copy = df_copy.transpose()
-#         df_copy.rename(column_mapper, axis = 'columns', inplace=True)
-#
-#         df_final = units_assignment(df_copy)
-#         df_final.to_csv('zoning_cleaned/' + county_jxtn + '.csv')
+input_dir = 'districts_needs_to_join_csv'
+gis_dir = 'gis_needs_to_join'
 
-editor_dir = 'Editor_formatted/district_attributes_csv/'
+for file_name in os.listdir(input_dir):
+    if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
+        print(file_name)
+        county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
 
-for file_name in os.listdir(editor_dir):
-    print(file_name)
-    county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
+        df = pd.read_csv(os.path.join(input_dir, file_name),
+                           skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
+                           header=None)
 
-    # Standardize column names
-    df = pd.read_csv(editor_dir + file_name, sep = ',', low_memory=False, header=0)
-    df.rename(editor_column_mapper, axis = 'columns', inplace=True)
-    df.set_index('ABB_DIST_NAME', inplace=True)
+        df_copy = df.copy()
 
-    df.to_csv('Editor_cleaned/district_attributes_csv/' + county_jxtn + '.csv')
+        # Disambiguate treatments
+        df_copy = disambiguate_treatments(df_copy)
+
+        # Transpose the DataFrame
+        df_copy = df_copy.transpose()
+        df_copy = df_copy.rename(df_copy.iloc[0][::], axis = 1)
+        df_copy = df_copy.drop(0)
+        df_copy.rename(column_mapper, axis = 'columns', inplace=True)
+
+        df_final = units_assignment(df_copy)
+        df_final.to_csv('Editor_cleaned/Excel_cleaned/' + county_jxtn + '.csv')
+
+# editor_dir = 'Editor_formatted/district_attributes_csv/'
+
+# for file_name in os.listdir(editor_dir):
+#     print(file_name)
+#     county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
+#
+#     # Standardize column names
+#     df = pd.read_csv(editor_dir + file_name, sep = ',', low_memory=False, header=0)
+#     df.rename(editor_column_mapper, axis = 'columns', inplace=True)
+#     df.set_index('ABB_DIST_NAME', inplace=True)
+#
+#     df.to_csv('Editor_cleaned/district_attributes_csv/' + county_jxtn + '.csv')
 
     # # Find and join matching geoJSONs for jurisdiction
     # gis_filename = os.path.join(gis_dir, county_jxtn[0] + '_' + county_jxtn[1] + '.geojson')
@@ -549,4 +551,3 @@ for file_name in os.listdir(editor_dir):
     # Save the joined geoDataFrame as a .geoJSON file
     # output_geojson = os.path.join('Editor-formatted/district_attributes_geojson', f'{county_jxtn[0]}_{county_jxtn[1]}_effMMDDYYYY.geojson')
     # gdf_joined.to_file(output_geojson, driver='GeoJSON')
-
