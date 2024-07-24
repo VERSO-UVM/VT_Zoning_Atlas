@@ -552,10 +552,10 @@ editor_column_mapper = {'Status':'STAT',
                  '3-Family Max. Lot Coverage - Buildings Units' : '3F_MAX_LOT_BLDG_UNITS',
                  '3-Family Max. Lot Coverage - Buildings & Impervious Surface': '3F_MAX_LOT_IMP',
                  '3-Family Max. Lot Coverage - Buildings & Impervious Surface Units': '3F_MAX_LOT_IMP_UNITS',
-                 '3-Family Min. # Parking Spaces Per Studio or 1BR': '3F_PARK_1BR',
-                 '3-Family Min. # Parking Spaces Per Studio or 1BR Units': '3F_PARK_1BR_UNITS',
-                 '3-Family Min. # Parking Spaces Per 2+ BR': '3F_PARK_2BR',
-                 '3-Family Min. # Parking Spaces Per 2+ BR Units': '3F_PARK_2BR_UNITS',
+                 '3-Family Min. Parking Spaces Per Studio or 1BR': '3F_PARK_1BR',
+                 '3-Family Min. Parking Spaces Per Studio or 1BR Units': '3F_PARK_1BR_UNITS',
+                 '3-Family Min. Parking Spaces Per 2+ BR': '3F_PARK_2BR',
+                 '3-Family Min. Parking Spaces Per 2+ BR Units': '3F_PARK_2BR_UNITS',
                  '3-Family Connection to Sewer and/or Water Required': '3F_CNXN_H2O',
                  '3-Family Connection or Proximity to Public Transit Required': '3F_CNXN_TRANSIT',
                  '3-Family Max. Stories': '3F_STORIES',
@@ -566,8 +566,8 @@ editor_column_mapper = {'Status':'STAT',
                  '3-Family Floor to Area Ratio Units': '3F_FTA_UNITS',
                  '3-Family Min. Unit Size': '3F_MIN_UNIT',
                  '3-Family Min. Unit Size Units': '3F_MIN_UNIT_UNITS',
-                 '3-Family Max. Bedrooms Per Unit': '3F_BEDROOMS',
-                 '3-Family Max. Bedrooms Per Unit Units': '3F_BEDROOMS_UNITS',
+                 '3-Family Max. Bedrooms': '3F_BEDROOMS',
+                 '3-Family Max. Bedrooms Units': '3F_BEDROOMS_UNITS',
                  '4+-Family Affordable Housing Only': '4F_AFF',
                  '4+-Family Elderly Housing Only': '4F_ELD',
                  '4+-Family Min. Lot': '4F_MIN_LOT',
@@ -584,10 +584,10 @@ editor_column_mapper = {'Status':'STAT',
                  '4+-Family Max. Lot Coverage - Buildings Units': '4F_MAX_LOT_BLDG_UNITS',
                  '4+-Family Max. Lot Coverage - Buildings & Impervious Surface': '4F_MAX_LOT_IMP',
                  '4+-Family Max. Lot Coverage - Buildings & Impervious Surface Units': '4F_MAX_LOT_IMP_UNITS',
-                 '4+-Family Min. # Parking Spaces Per Studio or 1BR': '4F_PARK_1BR',
-                 '4+-Family Min. # Parking Spaces Per Studio or 1BR Units': '4F_PARK_1BR_UNITS',
-                 '4+-Family Min. # Parking Spaces Per 2+ BR': '4F_PARK_2BR',
-                 '4+-Family Min. # Parking Spaces Per 2+ BR Units': '4F_PARK_2BR_UNITS',
+                 '4+-Family Min. Parking Spaces Per Studio or 1BR': '4F_PARK_1BR',
+                 '4+-Family Min. Parking Spaces Per Studio or 1BR Units': '4F_PARK_1BR_UNITS',
+                 '4+-Family Min. Parking Spaces Per 2+ BR': '4F_PARK_2BR',
+                 '4+-Family Min. Parking Spaces Per 2+ BR Units': '4F_PARK_2BR_UNITS',
                  '4+-Family Connection to Sewer and/or Water Required': '4F_CNXN_H2O',
                  '4+-Family Connection or Proximity to Public Transit Required': '4F_CNXN_TRANSIT',
                  '4+-Family Max. Stories': '4F_STORIES',
@@ -638,12 +638,14 @@ editor_column_mapper = {'Status':'STAT',
                  'ADU Max. Bedrooms': 'ADU_BEDROOMS',
                  'ADU Max. Bedrooms Units': 'ADU_BEDROOMS_UNITS',
                  'Planned Residential Development (PRD) Treatment': 'PRDDP',
-                 'Mobile or Manufactured Home Park (Y/N)': 'PRD_MHP',
+                 'Mobile or Manufactured Home Park': 'PRD_MHP',
                  'PRD Min. Lot': 'PRD_MIN_LOT',
+                 'PRD Min. Development Size': 'PRD_MIN_LOT',
                  'PRD Min. Lot Units': 'PRD_MIN_LOT_UNITS',
                  'PRD Max. Density': 'PRD_MAX_DENS',
                  'PRD Max. Density Units': 'PRD_MAX_DENS_UNITS',
                  'PRD Max. Units': 'PRD_MAX_UNITS',
+                 'PRD Max. Units Per Development Units': 'PRD_MAX_UNITS_UNITS',
                  'PRD Max. Units Units': 'PRD_MAX_UNITS_UNITS',
                  'Special Notes': 'SPNOTES',
                  'Tooltip Notes': 'TTIPNOTES',
@@ -673,8 +675,10 @@ editor_column_mapper = {'Status':'STAT',
                  '4-Family Lot Frontage Requirement': '4F_FRONT',
                  '5+-Family Lot Frontage Requirement': '5F_FRONT',
                  'PUD required with Subdivision': 'PUD_SUBDV',
+                 'PUD required with Subdivision Units': 'PUD_SUBDV_UNITS',
                  'PUD Threshold #': 'PUD_THRESH',
                  'PUD allowed': 'PUD_ALLOW',
+                 'PUD Allowed': 'PUD_ALLOW',
                  'PUD requiring land conservation': 'PUD_CONSERVE',
                  'Unique GIS schema identifier': 'GIS_ID'}
 
@@ -707,14 +711,96 @@ def disambiguate_treatments(df):
 
 # In[ ]:
 
+# atlas_list = []
+#
+# for filename in os.listdir('../ATLAS_READY/Editor_cleaned_district_boundaries_geoJSON'):
+#     try:
+#         atlas_list.append(gpd.read_file('../ATLAS_READY/Editor_cleaned_district_boundaries_geoJSON/' + filename))
+#     except:
+#         print(filename)
+#
+# for filename in os.listdir('../ATLAS_READY/Excel_cleaned_district_boundaries_geoJSON'):
+#     try:
+#         atlas_list.append(gpd.read_file('../ATLAS_READY/Excel_cleaned_district_boundaries_geoJSON/' + filename))
+#     except:
+#         print(filename)
+#
+# Atlas_layer = gpd.GeoDataFrame(pd.concat(atlas_list, ignore_index=True))
+#
+# Atlas_layer.to_file('atlas_layer.geoJSON', driver = 'GeoJSON')
+
+atlas_layer = gpd.read_file('../ATLAS_READY/atlas_layer.geoJSON')
+# columns_to_drop = []
+# fix_these_cols = {'COUNTY_left': 'COUNTY', 'JXTN_left': 'JXTN', 'JXTN_right': 'JXTN',
+#                   'COUNTY_right': 'COUNTY', 'PUD required with Subdivision_left': 'PUD_SUBDV',
+#                   'PUD Threshold #_left': 'PUD_THRESH', 'PUD requiring land conservation_left': 'PUD_CONSERVE',
+#                   'PUD required with Subdivision_right': 'PUD_SUBDV', 'PUD Threshold #_right': 'PUD_THRESH',
+#                   'PUD requiring land conservation_right': 'PUD_CONSERVE'}
+#
+# for key, val in editor_column_mapper.items():
+#     print(key)
+#     for index, row in atlas_layer.iterrows():
+#         try:
+#             if row[key] != np.NaN:
+#                 atlas_layer.at[index, val] == row[key]
+#                 columns_to_drop.append(key)
+#         except:
+#             print('This key isn\'t in column labels')
+#
+# for key, val in fix_these_cols.items():
+#     print(key)
+#     for index, row in atlas_layer.iterrows():
+#         try:
+#             if row[key] != np.NaN:
+#                 atlas_layer.at[index, val] == row[key]
+#                 columns_to_drop.append(key)
+#         except:
+#             print('This key isn\'t in column labels')
+#
+# atlas_layer.replace({'Addison County': 'Addison',
+#                      'Bennington County': 'Bennington',
+#                      'Chittenden County': 'Chittenden',
+#                      'Franklin County': 'Franklin',
+#                      'Grand Isle County': 'Grand Isle',
+#                      'Lamoille County': 'Lamoille',
+#                      'Rutland County': 'Rutland',
+#                      'Orange County': 'Orange',
+#                      'Washington County': 'Washington',
+#                      'Windham County': 'Windham',
+#                      'Windsor County': 'Windsor'}, inplace  = True)
+#
+# columns_to_drop = set(columns_to_drop)
+# columns_to_drop = list(columns_to_drop)
+#
+# atlas_layer.drop(columns_to_drop, axis='columns', inplace = True)
+# atlas_layer.drop(['Shape_Length', 'Shape_Area', 'FID_1', 'Shape__Are', 'Shape__Len', 'st_area(Shape)',
+#                   'st_perimeter(Shape)', '.'],
+#                   axis = 'columns', inplace = True)
+#
+# print('\n\n\nREMAINING COLUMNS LABELS\n')
+for x in atlas_layer.columns:
+    print(x)
+
+# atlas_layer.to_file('atlas_layer_cols_fixed.geoJSON', driver = 'GeoJSON')
+
+
+# print(atlas_layer['4FDP'].unique())
+
+# atlas_layer.to_file('atlas_layer.geoJSON', driver = 'GeoJSON')
 
 # Read the "Districts" worksheet into a DataFrame
-# input_dir = 'districts_needs_to_join_csv'
-# gis_dir = 'gis_needs_to_join'
-
+# input_dir = '../districts_needs_to_join_csv'
+# gis_dir = '../ATLAS_READY/gis_needs_to_join'
+#
+# unjoined = []
+#
+#
+# # Windsor_Pomfret
+# # Orleans_NewportCity
+# # Windsor_Weston
+#
 # for file_name in os.listdir(input_dir):
 #     if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
-#         print(file_name)
 #         county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
 #
 #         df = pd.read_csv(os.path.join(input_dir, file_name),
@@ -733,32 +819,43 @@ def disambiguate_treatments(df):
 #         df_copy.rename(column_mapper, axis = 'columns', inplace=True)
 #
 #         df_final = units_assignment(df_copy)
-#         df_final.to_csv('Editor_cleaned/Excel_cleaned/' + county_jxtn + '.csv')
+#         df_final.to_csv('../ATLAS_READY/Excel_cleaned/' + county_jxtn + '.csv')
 #
 #         # try:
 #
 #         # Find and join matching geoJSONs for jurisdiction
 #         gis_filename = os.path.join(gis_dir, county_jxtn + '.geojson')
-#         main_gdf = gpd.read_file(gis_filename)
+#         try:
+#             try:
+#                 main_gdf = gpd.read_file(gis_filename)
+#             except:
+#                 main_gdf = gpd.read_file('../Editor_legacy/district_boundaries/' + county_jxtn + '.geojson')
+#                 main_gdf = main_gdf[['Jurisdiction', 'County', 'Abbreviated District Name', 'geometry']]
 #
-#         gis_files = [main_gdf]
-#         for gis_file in os.listdir(gis_dir):
-#             # gis_stub = os.path.join(gis_dir, county_jxtn)
-#             if county_jxtn in gis_file and gis_file != (county_jxtn + '.geojson'):
-#                 gis_files.append(gpd.read_file(os.path.join(gis_dir, gis_file)))
+#             gis_files = [main_gdf]
+#             for gis_file in os.listdir(gis_dir):
+#                 # gis_stub = os.path.join(gis_dir, county_jxtn)
+#                 if county_jxtn in gis_file and gis_file != (county_jxtn + '.geojson'):
+#                     gis_files.append(gpd.read_file(os.path.join(gis_dir, gis_file)))
 #
-#         # Concatenate all GIS files together into a single GeoDataFrame
-#         gdf = gpd.GeoDataFrame(pd.concat(gis_files, ignore_index=True))
+#             # Concatenate all GIS files together into a single GeoDataFrame
+#             gdf = gpd.GeoDataFrame(pd.concat(gis_files, ignore_index=True))
 #
-#         # Merge the district attribute table with the GIS file
-#         gdf_joined = gdf.merge(df_final, left_on = 'Abbreviated District Name', right_on = 'ABB_DIST_NAME', how='left', suffixes = ('_left', '_right'))
-#         gdf_joined = gdf_joined.drop(['OBJECTID', 'COUNTY'], axis = 'columns')
+#             # Merge the district attribute table with the GIS file
+#             gdf_joined = gdf.merge(df_final, left_on = 'Abbreviated District Name', right_on = 'ABB_DIST_NAME', how='left', suffixes = ('_left', '_right'))
+#             # gdf_joined = gdf_joined.drop(['OBJECTID', 'COUNTY'], axis = 'columns')
 #
-#         gdf_joined = check_dupe_columns(gdf_joined)
+#             gdf_joined = check_dupe_columns(gdf_joined)
 #
-#         # Save the joined geoDataFrame as a .geoJSON file
-#         output_geojson = os.path.join('Editor_formatted/district_polygons_joined_geojson', f'{county_jxtn}_joined.geojson')
-#         gdf_joined.to_file(output_geojson, driver='GeoJSON')
+#             # Save the joined geoDataFrame as a .geoJSON file
+#             output_geojson = os.path.join('../ATLAS_READY/Excel_cleaned_district_boundaries_geoJSON', f'{county_jxtn}_joined.geojson')
+#             gdf_joined.to_file(output_geojson, driver='GeoJSON')
+#         except:
+#             unjoined.append(file_name)
+#
+# for x in sorted(unjoined):
+#     print(x)
+# print(len(unjoined))
 
         # except:
         #     with open('unjoined_jxtns.txt', 'w') as f:
@@ -773,7 +870,7 @@ def disambiguate_treatments(df):
 # filename = geopackage_dir + '_rev.gpkg'
 # gdf.to_file(filename, driver = 'GPKG')
 
-editor_dir = 'Editor_legacy/district_boundaries/'
+# editor_dir = 'Editor_legacy/district_boundaries/'
 
 # for file_name in os.listdir(editor_dir):
 #     county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
@@ -785,19 +882,19 @@ editor_dir = 'Editor_legacy/district_boundaries/'
 #
 #     df.to_csv('Editor_cleaned/district_boundaries_preclean/' + county_jxtn + '.csv')
 
-gis_dir = 'temp'
-temp_dir = '../ATLAS_READY/Editor_cleaned_district_boundaries_geoJSON'
-
-for gis_file in os.listdir(os.path.join(os.getcwd(), gis_dir)):
-    if gis_file != 'S__joined.geojson_Store_D_joined.geojson' and gis_file != '.DS_Store':
-        try:
-            filename = os.path.join(gis_dir, gis_file)
-            filename_no_extension = gis_file.split('.')[0]
-            thisgdf = gpd.read_file(filename)
-            thisgdf = thisgdf.rename(editor_column_mapper, axis = 'columns', copy = True)
-            revfilename = f'{filename_no_extension}_rev.geojson'
-            revfilename = os.path.join(temp_dir, revfilename)
-            # thisgdf = check_dupe_columns(thisgdf)
-            thisgdf.to_file(revfilename, driver = 'GeoJSON')
-        except:
-            print(gis_file)
+# gis_dir = 'temp'
+# temp_dir = '../ATLAS_READY/Editor_cleaned_district_boundaries_geoJSON'
+#
+# for gis_file in os.listdir(os.path.join(os.getcwd(), gis_dir)):
+#     if gis_file != 'S__joined.geojson_Store_D_joined.geojson' and gis_file != '.DS_Store':
+#         try:
+#             filename = os.path.join(gis_dir, gis_file)
+#             filename_no_extension = gis_file.split('.')[0]
+#             thisgdf = gpd.read_file(filename)
+#             thisgdf = thisgdf.rename(editor_column_mapper, axis = 'columns', copy = True)
+#             revfilename = f'{filename_no_extension}_rev.geojson'
+#             revfilename = os.path.join(temp_dir, revfilename)
+#             # thisgdf = check_dupe_columns(thisgdf)
+#             thisgdf.to_file(revfilename, driver = 'GeoJSON')
+#         except:
+#             print(gis_file)
