@@ -255,6 +255,40 @@ editor_column_mapper = {'Status':'STAT',
                  'Juridiction Last Updated': 'JXTN_UPDATE',
                  'Parent Jurisdiction': 'PARENT_JXTN',
                  'Abbreviated District Name': 'ABB_DIST_NAME',
+                 'Visible Atlas Notes': 'NOTES',
+                 '3-Family Max Stories': '3F_STORIES',
+                 '3-Family Max Stories Units': '3F_STORIES_UNITS',
+                 '3-Family Max Height': '3F_MAX_HEIGHT',
+                 '3-Family Max Height Units': '3F_MAX_HEIGHT_UNITS',
+                 '3-Family Min Unit Size': '3F_MIN_UNIT',
+                 '3-Family Min Unit Size Units': '3F_MIN_UNIT_UNITS',
+                 '3-Family Max Bedrooms': '3F_BEDROOMS',
+                 '3-Family Max Bedrooms Units': '3F_BEDROOMS_UNITS',
+                 '4+-Family Max Density': '4F_MAX_DENSITY',
+                 '4+-Family Max Density Units': '4F_MAX_DENSITY_UNITS',
+                 '4+-Family Max Lot Coverage Buildings': '4F_MAX_LOT_BLDG',
+                 '4+-Family Max Lot Coverage Buildings Units': '4F_MAX_LOT_BLDG_UNITS',
+                 '4+-Family Max Stories': '4F_STORIES',
+                 '4+-Family Max Stories Units': '4F_STORIES_UNITS',
+                 '4+-Family Max Height': '4F_HEIGHT',
+                 '4+-Family Max Height Units': '4F_HEIGHT_UNITS',
+                 '4+-Family Min Unit Size': '4F_MIN_UNIT',
+                 '4+-Family Min Unit Size Units': '4F_MIN_UNIT_UNITS',
+                 '4+-Family Max Bedrooms': '4F_BEDROOMS',
+                 '4+-Family Max Bedrooms Units': '4F_BEDROOMS_UNITS',
+                 'Affordable Max Density': 'AFF_MAX_DENS',
+                 'Affordable Max Density Units': 'AFF_MAX_DENS_UNITS',
+                 'Affordable Min Unit Size': 'AFF_MIN_UNIT',
+                 'Affordable Min Unit Size Units': 'AFF_MIN_UNIT_UNITS',
+                 'Affordable Max Bedrooms': 'AFF_BEDROOMS',
+                 'Affordable Max Bedrooms Units': 'AFF_BEDROOMS_UNITS',
+                 'ADU Max Bedrooms': 'ADU_BEDROOMS',
+                 'ADU Max Bedrooms Units': 'ADU_BEDROOMS_UNITS',
+                 'PRD Min Development Size': 'PRD_MIN_LOT',
+                 'PRD Max Density': 'PRD_MAX_DENS',
+                 'PRD Max Density Units': 'PRD_MAX_DENS_UNITS',
+                 'PRD Max Units': 'PRD_MAX_UNIT',
+                 'PRD Max Units Units': 'PRD_MAX_UNIT_UNITS',
                  'Full District Name': 'DIST_NAME',
                  'Effective Start Date': 'BYLAW_EFF',
                  'Changed or Expired': 'CHANGE_EXP',
@@ -325,6 +359,16 @@ editor_column_mapper = {'Status':'STAT',
                  '2-Family Max. Stories Units': '2F_STORIES_UNITS',
                  '2-Family Max. Height': '2F_HEIGHT',
                  '2-Family Max. Height Units': '2F_HEIGHT_UNITS',
+                 '2-Family Max Density': '2F_MAX_DENS',
+                 '2-Family Max Density Units': '2F_MAX_DENS_UNITS',
+                 '2-Family Max Lot Coverage Buildings': '2F_MAX_LOT_BLDG',
+                 '2-Family Max Lot Coverage Buildings Units': '2F_MAX_LOT_BLDG_UNITS',
+                 '2-Family Max Stories': '2F_STORIES',
+                 '2-Family Max Stories Units': '2F_STORIES_UNITS',
+                 '2-Family Max Height': '2F_HEIGHT',
+                 '2-Family Max Height Units': '2F_HEIGHT_UNITS',
+                 '2-Family Min Unit Size': '2F_MIN_UNIT',
+                 '2-Family Min Unit Size Units': '2F_MIN_UNIT_UNITS',
                  '2-Family Floor to Area Ratio': '2F_FTA',
                  '2-Family Floor to Area Ratio Units': '2F_FTA_UNITS',
                  '2-Family Min. Unit Size': '2F_MIN_UNIT',
@@ -365,6 +409,10 @@ editor_column_mapper = {'Status':'STAT',
                  '3-Family Min. Unit Size Units': '3F_MIN_UNIT_UNITS',
                  '3-Family Max. Bedrooms': '3F_BEDROOMS',
                  '3-Family Max. Bedrooms Units': '3F_BEDROOMS_UNITS',
+                 '3-Family Max Density': '3F_MAX_DENS',
+                 '3-Family Max Density Units': '3F_MAX_DENS_UNITS',
+                 '3-Family Max Lot Coverage Buildings': '3F_MAX_LOT_BLDG',
+                 '3-Family Max Lot Coverage Buildings Units': '3F_MAX_LOT_BLDG_UNITS',
                  '4+-Family Affordable Housing Only': '4F_AFF',
                  '4+-Family Elderly Housing Only': '4F_ELD',
                  '4+-Family Min. Lot': '4F_MIN_LOT',
@@ -512,8 +560,8 @@ editor_column_mapper = {'Status':'STAT',
                 'Affordable Elderly Only': 'AFF_ELD',
                 'Affordable Min Lot Size': 'AFF_MIN_LOT',
                 'Affordable Min Lot Size Units': 'AFF_MIN_LOT_UNITS',
-                '4+-Family Max Lot Coverage Buildings & Impervious': '4F_MAX_LOT_BLDG',
-                '4+-Family Max Lot Coverage Buildings & Impervious Units': '4F_MAX_LOT_IMP',
+                '4+-Family Max Lot Coverage Buildings & Impervious': '4F_MAX_LOT_IMP',
+                '4+-Family Max Lot Coverage Buildings & Impervious Units': '4F_MAX_LOT_IMP_UNITS',
                 '4+-Family Min Parking Per Studio/1BR': '4F_PARK_1BR',
                 '4+-Family Min Parking Per Studio/1BR Units': '4F_PARK_1BR_UNITS',
                 '4+-Family Min Parking Per 2+ BR': '4F_PARK_2BR',
@@ -592,6 +640,16 @@ excel_editor = [
     'Windham_Windham'
 ]
 
+editor_noneditor_mix = [
+    'Lamoille_JohnsonTownJohnsonVillage',
+    'Washington_Northfield',
+    'Windham_Dummerston',
+    'Windsor_Chester',
+    'Windsor_Hartford',
+    'Windsor_Rochester',
+    'Windsor_Weathersfield'
+]
+
 # In[9]:
 
 # Function to disambiguate treatments
@@ -653,7 +711,8 @@ def fix_conditionals(df):
                 df[col] = fixed_cond_col
                 df[non_cond_col] = fixed_col
         except:
-            print(df[['COUNTY', 'JXTN', 'ABB_DIST_NAME']])
+            print(df[['COUNTY', 'JXTN', 'ABB_DIST_NAME', col]])
+            print(df[non_cond_col])
             df = df.drop(col, axis = 'columns', inplace = True)
     return(df)
 
@@ -710,6 +769,27 @@ ghost_cols = []
 unjoined = []
 all_unzoned_jxtns = []
 gis_dir = 'geoJSONs_ZONED'
+all_zoned_jxtns = []
+
+# for val in sorted(column_mapper.values()):
+#     print(val)
+
+# editor_files = gpd.read_file('final_consolidated_layers/Editor_layer.geojson')
+# for index, row in editor_files.iterrows():
+#     all_zoned_jxtns.append(row)
+#
+# print('Done with Editor layer')
+#
+# for file in os.listdir(joined):
+#     if file != '.DS_Store':
+#         df = gpd.read_file(os.path.join(joined, file))
+#         all_zoned_jxtns.append(df)
+#         final_layer = gpd.GeoDataFrame(pd.concat(all_zoned_jxtns, ignore_index=True))
+#         print('NonEditor district complete')
+#
+# print('Done with nonEditor layer')
+#
+# final_layer.to_file('final_consolidated_layers/Editor_nonEditor_join1.geoJSON', driver = 'GeoJSON')
 
 ''' STEP ZERO: Join unzoned jxtns into single layer'''
 
@@ -746,7 +826,7 @@ gis_dir = 'geoJSONs_ZONED'
 
 '''STEP ONE: Consolidate attribute tables with geoJSON layers for non-Editor jurisdictions'''
 
-print('Completely cleaning all geoJSON files prior to merge')
+# print('Completely cleaning all geoJSON files prior to merge')
 
 # for file_name in os.listdir(gis_dir):
 #     if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
@@ -766,35 +846,62 @@ print('Completely cleaning all geoJSON files prior to merge')
 #
 # ''' STEP ONE: Convert .csv's to DataFrames '''
 #
+
+update_list = [
+    'Bennington_Sandgate',
+    'Chittenden_EssexJunction',
+    'Chittenden_Richmond',
+    'Chittenden_SouthBurlington',
+    'Franklin_Fairfax',
+    'Rutland_Killington',
+    'Washington_Waterbury'
+]
 # print("Converting all .csv's in the Excel csvs directory")
 #
 # for file_name in os.listdir(excel_csvs):
 #     if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
 #         county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
 #
-#         df = pd.read_csv(os.path.join(excel_csvs, file_name),
-#                            skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
-#                            header=None)
+#         if county_jxtn in update_list:
 #
-#         df_copy = df.copy()
+#             df = pd.read_csv(os.path.join(excel_csvs, file_name),
+#                                skiprows=[19, 32, 49, 69, 90, 111, 121, 132, 137, 142],
+#                                header=None)
 #
-#         # Disambiguate treatments
-#         df_copy = disambiguate_treatments(df_copy)
+#             df_copy = df.copy()
 #
-#         # Transpose the DataFrame
-#         df_copy = df_copy.transpose()
-#         df_copy = df_copy.rename(df_copy.iloc[0][::], axis = 1)
-#         df_copy = df_copy.drop(0)
-#         df_copy.rename(column_mapper, axis = 'columns', inplace=True)
-#         df_copy.rename(editor_column_mapper, axis = 'columns', inplace = True)
+#             # Disambiguate treatments
+#             df_copy = disambiguate_treatments(df_copy)
 #
-#         df_final = units_assignment(df_copy)
+#             # Transpose the DataFrame
+#             df_copy = df_copy.transpose()
+#             df_copy = df_copy.rename(df_copy.iloc[0][::], axis = 1)
+#             df_copy = df_copy.drop(0)
+#             df_copy.rename(column_mapper, axis = 'columns', inplace=True)
+#             df_copy.rename(editor_column_mapper, axis = 'columns', inplace = True)
 #
-#         df_final = fix_values(df_final, excel_mapper, False)
-#         df_final.to_csv('00_preprocessed_CSVs/' + county_jxtn + '_featuresExcel.csv')
+#             df_final = units_assignment(df_copy)
 #
-# ''' STEP TWO: Standardize column labels, fix conditional columns and mismatched values for Editor files'''
+#             df_final = fix_values(df_final, excel_mapper, False)
+#             df_final.to_csv('00_preprocessed_CSVs/' + county_jxtn + '_featuresExcel.csv')
 #
+# for file in os.listdir(preprocessed):
+#     if file != '.DS_Store':
+#         county_jxtn = file.split('_')[0] + '_' + file.split('_')[1]
+#
+#         if county_jxtn in update_list:
+#
+#             df = pd.read_csv(os.path.join(preprocessed, file))
+#             df.rename(editor_column_mapper, axis='columns', inplace=True)
+#             fix_units = {x: x.replace('_UNITS', '_COND_ALT') for x in df.columns}
+#             df.rename(fix_units, axis = 'columns', inplace=True)
+#
+#             df = fix_conditionals(df)
+#
+#             df.to_csv('03_conditionals_fixed/' + county_jxtn + '_features_rev080724.csv')
+
+''' STEP TWO: Standardize column labels, fix conditional columns and mismatched values for Editor files'''
+
 # print('Fixing column labels, mismatched values, and conditional values in Editor-joined geoJSONs')
 #
 # for file_name in os.listdir(joined):
@@ -814,7 +921,7 @@ print('Completely cleaning all geoJSON files prior to merge')
 #             pass
 #
 #         gdf.to_file('02_joined/' + file_name, driver = 'GeoJSON')
-#
+
 # ''' STEP THREE: Move conditional/alternative values to _COND columns for Excel-originated files '''
 #
 # print('Now for Excel-originated files')
@@ -834,56 +941,93 @@ print('Completely cleaning all geoJSON files prior to merge')
 #
 # print('Finding and joining matching geoJSONs for jurisdictions not pre-joined inside Editor')
 #
-# for file_name in os.listdir(conds_fixed):
-#     if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
-#
-#         try:
-#             county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
-#
-#             df = pd.read_csv(os.path.join(conds_fixed, file_name))
-#
-#             try:
-#                 try:
-#                     main_gdf = gpd.read_file('geoJSONs_ZONED_nonEditor/' + county_jxtn + '_rev.geojson')
-#                 except:
-#                     gis_filename = os.path.join(output_gis_dir, county_jxtn + '_rev.geojson')
-#                     main_gdf = gpd.read_file(gis_filename)
-#             except:
-#                 gis_filename = os.path.join(standard_cols, f'{county_jxtn}_standardcols.geojson')
-#                 main_gdf = gpd.read_file(gis_filename)
-#
-#             gis_files = [main_gdf]
-#             for gis_file in os.listdir(output_gis_dir):
-#                 if county_jxtn in gis_file and gis_file != (county_jxtn + '.geojson'):
-#                     gis_files.append(gpd.read_file(os.path.join(output_gis_dir, gis_file)))
-#
-#             # Concatenate all GIS files together into a single GeoDataFrame
-#             gdf = gpd.GeoDataFrame(pd.concat(gis_files, ignore_index=True))
-#
-#             if 'JXTN' in df.columns and 'JXTN' in gdf.columns:
-#                 df.drop('JXTN', axis = 'columns', inplace = True)
-#
-#             if 'COUNTY' in df.columns and 'COUNTY' in gdf.columns:
-#                 df.drop('COUNTY', axis = 'columns', inplace = True)
-#
-#             # Merge the district attribute table with the GIS file
-#             gdf_joined = gdf.merge(df, on='ABB_DIST_NAME', how='left')
-#
-#             gdf_joined = check_dupe_columns(gdf_joined)
-#
-#             # Save the joined geoDataFrame as a .geoJSON file
-#             output_geojson = os.path.join(joined, f'{county_jxtn}_joinednonEditor.geojson')
-#             gdf_joined.to_file(output_geojson, driver='GeoJSON')
-#         except:
-#             unjoined.append(file_name)
+for file_name in os.listdir(conds_fixed):
+    if file_name != '.DS_Store' and file_name != '.DS_Store.xlsx':
 
-# for x in unjoined:
-#     print(x)
-# print(len(unjoined))
+        try:
+            county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
+            if county_jxtn in update_list and '080724' in file_name:
+
+                df = pd.read_csv(os.path.join(conds_fixed, file_name))
+                try:
+                    # df.rename(editor_column_mapper, axis='columns', inplace=True)
+                    df.rename(column_mapper, axis='columns', inplace=True)
+                except:
+                    print('WTF ' + file_name)
+
+                if '1F_MIN_LOT_COND_ALT' not in df.columns:
+                    try:
+                        fix_units = {x: x.replace('_UNITS', '_COND_ALT') for x in df.columns}
+                        df.rename(fix_units, axis = 'columns', inplace=True)
+                    except:
+                        break
+                    df = fix_conditionals(df)
+                    df = fix_values(df, excel_mapper, False)
+
+                try:
+                    main_gdf = gpd.read_file('geoJSONs_ZONED_nonEditor/' + county_jxtn + '_rev.geojson')
+                except:
+                    try:
+                        gis_filename = os.path.join(output_gis_dir, county_jxtn + '_rev.geojson')
+                        main_gdf = gpd.read_file(gis_filename)
+                    except:
+                        main_gdf = gpd.read_file('geoJSONs_ZONED_nonEditor/' + county_jxtn + '_rev08072024.geojson')
+
+                gis_files = [main_gdf]
+                for gis_file in os.listdir(output_gis_dir):
+                    try:
+                        mainfilename = county_jxtn + '_rev.geoJSON'
+                    except:
+                        mainfilename = county_jxtn + '_rev08072024.geoJSON'
+                    if county_jxtn in gis_file and gis_file.lower() != mainfilename.lower():
+                        gis_files.append(gpd.read_file(os.path.join(output_gis_dir, gis_file)))
+
+                # Concatenate all GIS files together into a single GeoDataFrame
+                gdf = gpd.GeoDataFrame(pd.concat(gis_files, ignore_index=True))
+
+                try:
+                    df.drop('Unnamed: 0', axis = 'columns', inplace = True)
+                except:
+                    pass
+
+                if 'JXTN' in df.columns and 'JXTN' in gdf.columns:
+                    df.drop('JXTN', axis = 'columns', inplace = True)
+
+                if 'COUNTY' in df.columns and 'COUNTY' in gdf.columns:
+                    df.drop('COUNTY', axis = 'columns', inplace = True)
+
+                # Merge the district attribute table with the GIS file
+                gdf_joined = gdf.merge(df, on='ABB_DIST_NAME', how='left')
+
+                gdf_joined.replace({'Addison County': 'Addison',
+                         'Bennington County': 'Bennington',
+                         'Caledonia County': 'Caledonia',
+                         'Chittenden County': 'Chittenden',
+                         'Essex County': 'Essex',
+                         'Franklin County': 'Franklin',
+                         'Grand Isle County': 'Grand Isle',
+                         'Lamoille County': 'Lamoille',
+                         'Rutland County': 'Rutland',
+                         'Orleans County': 'Orleans',
+                         'Orange County': 'Orange',
+                         'Washington County': 'Washington',
+                         'Windham County': 'Windham',
+                         'Windsor County': 'Windsor'}, inplace = True)
+
+                # Save the joined geoDataFrame as a .geoJSON file
+                output_geojson = os.path.join(joined, f'{county_jxtn}_joinednonEditor.geojson')
+                pd.set_option('display.max_columns', None)
+                gdf_joined.to_file(output_geojson, driver='GeoJSON')
+        except:
+            unjoined.append(file_name)
+
+for x in unjoined:
+    print(x)
+print(len(unjoined))
 
 '''STEP FOUR: Save all individual jurisdiction final joined geoJSONs'''
 
-print('Saving individual jurisdiction files')
+# print('Saving individual jurisdiction files')
 
 # for dir in dirs:
 #     for file_name in os.listdir(dir):
@@ -901,57 +1045,59 @@ print('Saving individual jurisdiction files')
 
 '''STEP FIVE: Merge all single jurisdiction layers into a single statewide zoned-jxtn layer'''
 
-print('Merging all jurisdiction layers into a single statewide layer with full dataset')
-
-for dir in dirs:
-    for file_name in os.listdir(dir):
-            county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
-            try:
-                df = gpd.read_file(os.path.join(dir, file_name), low_memory=False, header=0)
-                df.rename(column_mapper, axis='columns', inplace=True)
-                df.rename(editor_column_mapper, axis='columns', inplace=True)
-                df.rename(editor_column_mapper_supp, axis = 'columns', inplace = True)
-                # df = fix_conditionals(df)
-                try:
-                    df = fix_values(df, excel_mapper, False)
-                except:
-                    df = fix_values(df, excel_mapper, True)
-                all_zoned_jxtns.append(df)
-            except:
-                print(file_name)
-            counter += 1
-
-final_layer = gpd.GeoDataFrame(pd.concat(all_zoned_jxtns, ignore_index=True))
-
-final_layer.replace({'Addison County': 'Addison',
-                     'Bennington County': 'Bennington',
-                     'Caledonia County': 'Caledonia',
-                     'Chittenden County': 'Chittenden',
-                     'Essex County': 'Essex',
-                     'Franklin County': 'Franklin',
-                     'Grand Isle County': 'Grand Isle',
-                     'Lamoille County': 'Lamoille',
-                     'Rutland County': 'Rutland',
-                     'Orleans County': 'Orleans',
-                     'Orange County': 'Orange',
-                     'Washington County': 'Washington',
-                     'Windham County': 'Windham',
-                     'Windsor County': 'Windsor'}, inplace  = True)
-
-for x in final_layer.columns:
-    print(x)
-
-final_layer = fix_values(final_layer, excel_mapper, False)
-
-final_layer.to_file('final_consolidated_layers/VTZA_zoned_jxtns_07182024.geoJSON', driver = 'GeoJSON')
-
-''' STEP SIX: Subset jxtn files for VT Planning Atlas visualization'''
-
-print('Subsetting full dataset for Vermont Planning Atlas')
-
-for x in final_layer.columns:
-    if x not in vtplanning_cols:
-        final_layer.drop(x, axis = 'columns', inplace = True)
-
-vt_planning_layer = final_layer
-vt_planning_layer.to_file('final_consolidated_layers/VTPlanningAtlas_zoned_jxtns_071824.geoJSON', driver = 'GeoJSON')
+# print('Merging all jurisdiction layers into a single statewide layer with full dataset')
+#
+# for dir in dirs:
+#     for file_name in os.listdir(dir):
+#             county_jxtn = file_name.split('_')[0] + '_' + file_name.split('_')[1]
+#             try:
+#                 df = gpd.read_file(os.path.join(dir, file_name), low_memory=False, header=0)
+#                 df.rename(column_mapper, axis='columns', inplace=True)
+#                 df.rename(editor_column_mapper, axis='columns', inplace=True)
+#                 df.rename(editor_column_mapper_supp, axis = 'columns', inplace = True)
+#                 # df = fix_conditionals(df)
+#                 try:
+#                     df = fix_values(df, excel_mapper, False)
+#                 except:
+#                     df = fix_values(df, excel_mapper, True)
+#                 all_zoned_jxtns.append(df)
+#             except:
+#                 print(file_name)
+#             counter += 1
+#
+# final_layer = gpd.GeoDataFrame(pd.concat(all_zoned_jxtns, ignore_index=True))
+#
+# final_layer.replace({'Addison County': 'Addison',
+#                      'Bennington County': 'Bennington',
+#                      'Caledonia County': 'Caledonia',
+#                      'Chittenden County': 'Chittenden',
+#                      'Essex County': 'Essex',
+#                      'Franklin County': 'Franklin',
+#                      'Grand Isle County': 'Grand Isle',
+#                      'Lamoille County': 'Lamoille',
+#                      'Rutland County': 'Rutland',
+#                      'Orleans County': 'Orleans',
+#                      'Orange County': 'Orange',
+#                      'Washington County': 'Washington',
+#                      'Windham County': 'Windham',
+#                      'Windsor County': 'Windsor'}, inplace  = True)
+#
+# for x in final_layer.columns:
+#     print(x)
+#
+# final_layer = fix_values(final_layer, excel_mapper, False)
+#
+# final_layer.to_file('final_consolidated_layers/VTZA_zoned_jxtns_07182024.geoJSON', driver = 'GeoJSON')
+#
+# ''' STEP SIX: Subset jxtn files for VT Planning Atlas visualization'''
+#
+# print('Subsetting full dataset for Vermont Planning Atlas')
+#
+# final_layer = gpd.read_file('final_consolidated_layers/VTZA_zoned_jxtns_08012024_final.geojson')
+#
+# for x in final_layer.columns:
+#     if x not in vtplanning_cols:
+#         final_layer.drop(x, axis = 'columns', inplace = True)
+#
+# vt_planning_layer = final_layer
+# vt_planning_layer.to_file('final_consolidated_layers/VTPlanningAtlas_zoned_jxtns_08022024.geoJSON', driver = 'GeoJSON')
