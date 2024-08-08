@@ -9,6 +9,8 @@ Without this tool, one would have to read thousands of pages of dense legal code
 In the News: 
 [Housing Forward Virginia - Zoning Atlases Across the Map: Vermont, August 24, 2023](https://housingforwardva.org/news/fwd-g25-vermont-zoning-atlas/)
 
+UVM
+
 ## Progress
 Counties Completed
 * Chittenden
