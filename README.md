@@ -12,19 +12,7 @@ In the News:
 UVM
 
 ## Progress
-Counties Completed
-* Chittenden
-* Addison
-* Franklin
-* Grand Isle
-* Rutland
-
-Counties in Progress 
-* Bennington
-* Lamoille
-* Washington
-* Windham
-* Orange
+At this point all areas have been mapped and we are working towards publishing the whole dataset.
 
 ## Data
 Data uploaded to the National Zoning Atlas can be found in the "ZoningAtlas" folder as follows:
